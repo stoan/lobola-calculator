@@ -1,5 +1,5 @@
 # lobola-calculator
-Questionnaire game 
+Questionnaire game developed over the weekend for fun and jokes ;-) 
 
 http://www.lobolo.co.za
 
