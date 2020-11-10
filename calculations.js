@@ -89,6 +89,7 @@ else if(totalScore >= 30 && totalScore <= 39){
    }
    
    if(totalScore == 31){
+     randValue = 20000;
      showCowImages(8);
    }
    
@@ -119,12 +120,13 @@ else if(totalScore >= 30 && totalScore <= 39){
    
    if(totalScore == 37){
        randValue = 33000;
-      showCowImages(11);
+       showCowImages(11);
    }
    
    if(totalScore == 38){
        randValue = 35000;
        showCowImages(11);
+   }
    
    if(totalScore == 39){
      randValue = 40000;
