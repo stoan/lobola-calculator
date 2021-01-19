@@ -10,127 +10,127 @@ function calculateResults() {
   
 if(totalScore > 60){
  randValue = 100000;
-  document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+ showCowImages(20);
 }
 
 else if(totalScore >= 50 && totalScore <= 60){
   randValue = 80000;
-  document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+  showCowImages(11);
 }
 
 else if(totalScore >= 40 && totalScore <= 49){
   
    if(totalScore == 40){
      randValue = 42000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
     if(totalScore == 41){
      randValue = 45000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
     if(totalScore == 42){
      randValue = 48000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
     if(totalScore == 43){
      randValue = 50000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
     if(totalScore == 44){
      randValue = 55000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
      if(totalScore == 45){
      randValue = 57000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
      if(totalScore == 46){
      randValue = 60000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
      if(totalScore == 47){
      randValue = 62000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
      if(totalScore == 48){
      randValue = 64000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
      if(totalScore == 49){
      randValue = 67000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
 }
 
 else if(totalScore >= 20 && totalScore <= 29){
   randValue = 10000;
-  document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+  showCowImages(8);
 }
 
 else if(totalScore < 20){
   randValue = 5000;
-  document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+  showCowImages(5);
 }
 
 else if(totalScore >= 30 && totalScore <= 39){
   
    if(totalScore == 30){
        randValue = 15000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+       showCowImages(8);
    }
    
    if(totalScore == 31){
-       randValue = 20000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     randValue = 20000;
+     showCowImages(8);
    }
    
    if(totalScore == 32){
        randValue = 23000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+       showCowImages(8);
    }
    
    if(totalScore == 33){
        randValue = 25000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+       showCowImages(8);
    }
    
    if(totalScore == 34){
        randValue = 27000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+       showCowImages(8);
    }
    
    if(totalScore == 35){
        randValue = 28000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+       showCowImages(11);
    }
    
    if(totalScore == 36){
        randValue = 30000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+       showCowImages(11);
    }
    
    if(totalScore == 37){
        randValue = 33000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+       showCowImages(11);
    }
    
    if(totalScore == 38){
        randValue = 35000;
-       document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+       showCowImages(11);
    }
    
    if(totalScore == 39){
      randValue = 40000;
-     document.getElementById("cowImages").innerHTML =  '<img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'><img src=\'cow-icon-48.png\'>';
+     showCowImages(11);
    }
    
    
@@ -143,7 +143,11 @@ document.getElementById("points").innerHTML ='You scored ' + totalScore +' point
 
 };
 
-
+function showCowImages(noOfImages) {
+  for(let i = 0 ; i < noOfImages; i++) {
+    document.getElementById("cowImages").innerHTML +=  '<img src=\'cow-icon-48.png\'>';
+  }
+};
 
 function getEducationScore1() {
 return $('#eduGroup label.active input').val();
