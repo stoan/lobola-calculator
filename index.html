@@ -12,12 +12,32 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
     <style>
+      /* Game-like polish pass: keep motion subtle, readable, and easy to undo. */
+      :root {
+        --page-ivory: #f8f3e8;
+        --page-sand: #eedcb5;
+        --ink-strong: #2d2218;
+        --ink-muted: #6d6153;
+        --accent-gold: #c58a34;
+        --accent-gold-deep: #8f5f1f;
+        --accent-cream: #fff4db;
+        --emerald: #2f8d69;
+        --panel-shadow: 0 1.25rem 3rem rgba(78, 54, 21, 0.14);
+        --panel-border: rgba(143, 95, 31, 0.18);
+      }
+
       body {
-        background-color: #f8f9fa;
+        min-height: 100vh;
+        color: var(--ink-strong);
+        background:
+          radial-gradient(circle at top left, rgba(197, 138, 52, 0.22), transparent 32%),
+          radial-gradient(circle at top right, rgba(47, 141, 105, 0.1), transparent 28%),
+          linear-gradient(180deg, var(--page-ivory), #f6eee0 48%, #efe3ca 100%);
       }
 
       #wizard {
-        padding: 2rem 0 3rem;
+        position: relative;
+        padding: 2.5rem 0 3.5rem;
       }
 
       .heading-font {
@@ -35,24 +55,106 @@
       .share-links a {
         margin-right: 0.5rem;
         margin-bottom: 0.5rem;
+        border-radius: 999px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+      }
+
+      .share-links a:hover,
+      .share-links a:focus-visible {
+        transform: translateY(-1px);
+        box-shadow: 0 0.75rem 1.5rem rgba(56, 41, 19, 0.14);
+        filter: saturate(1.05);
+      }
+
+      .hero-intro {
+        position: relative;
+      }
+
+      .hero-intro::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1rem;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(197, 138, 52, 0.85), rgba(197, 138, 52, 0));
+      }
+
+      .hero-intro h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        letter-spacing: 0.04em;
+        margin-bottom: 0.75rem;
+        text-shadow: 0 0.35rem 1rem rgba(107, 74, 24, 0.12);
+      }
+
+      .hero-intro p:not(.tagline-font) {
+        max-width: 46rem;
+        color: var(--ink-muted);
+      }
+
+      .hero-intro a:not(.btn) {
+        color: var(--accent-gold-deep);
+        font-weight: 600;
       }
 
       .wizard-card {
-        background-color: #fff;
-        border: 1px solid rgba(0, 0, 0, 0.125);
-        border-radius: 0.5rem;
-        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
-        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 248, 234, 0.97));
+        border: 1px solid var(--panel-border);
+        border-radius: 1.25rem;
+        box-shadow: var(--panel-shadow);
+        padding: clamp(1.25rem, 2.75vw, 2rem);
+      }
+
+      .wizard-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at top right, rgba(197, 138, 52, 0.12), transparent 22%),
+          radial-gradient(circle at bottom left, rgba(47, 141, 105, 0.08), transparent 28%);
+        pointer-events: none;
+      }
+
+      .wizard-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .tagline-font {
+        color: var(--accent-gold-deep);
+        font-size: clamp(1.15rem, 2.6vw, 1.55rem);
+      }
+
+      #messageInfoDialog {
+        border: 0;
+        border-radius: 1rem;
+        color: #4a3517;
+        background: linear-gradient(135deg, rgba(255, 244, 219, 0.94), rgba(255, 255, 255, 0.92));
+        box-shadow: 0 0.9rem 2rem rgba(88, 61, 24, 0.08);
       }
 
       .wizard-stepper .bs-stepper-header {
         flex-wrap: wrap;
         align-items: stretch;
-        margin-bottom: 1rem;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
       }
 
       .wizard-stepper .step {
         flex: 1 1 0;
+      }
+
+      .wizard-stepper .line {
+        flex: 0 0 1.5rem;
+        align-self: center;
+        height: 2px;
+        margin: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(197, 138, 52, 0.5), rgba(197, 138, 52, 0.08));
       }
 
       .wizard-stepper .step-trigger {
@@ -61,54 +163,346 @@
         justify-content: center;
         padding: 0.75rem 0.5rem;
         text-align: center;
+        color: var(--ink-muted);
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(143, 95, 31, 0.14);
+        border-radius: 1rem;
+        box-shadow: 0 0.75rem 1.5rem rgba(70, 49, 21, 0.06);
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease,
+          background-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .wizard-stepper .step-trigger:disabled {
+        opacity: 1;
+      }
+
+      .wizard-stepper .step.active .step-trigger {
+        color: var(--ink-strong);
+        background: linear-gradient(135deg, rgba(255, 245, 221, 0.98), rgba(255, 255, 255, 0.98));
+        border-color: rgba(197, 138, 52, 0.54);
+        box-shadow: 0 1rem 2.2rem rgba(88, 61, 24, 0.14);
       }
 
       .wizard-stepper .bs-stepper-label {
         line-height: 1.25;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+
+      .wizard-stepper .bs-stepper-circle {
+        background: rgba(197, 138, 52, 0.12);
+        color: var(--accent-gold-deep);
+        transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .wizard-stepper .step.active .bs-stepper-circle {
+        color: #fff;
+        background: linear-gradient(135deg, var(--accent-gold), #dbab54);
+        box-shadow: 0 0.7rem 1.35rem rgba(143, 95, 31, 0.32);
+        transform: scale(1.04);
       }
 
       .wizard-stepper .progress {
-        height: 1.25rem;
+        height: 1rem;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(132, 102, 57, 0.14);
+        box-shadow: inset 0 0.08rem 0.2rem rgba(95, 69, 33, 0.12);
+      }
+
+      .wizard-stepper .progress-bar {
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: #fff;
+        background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+        background-color: var(--emerald);
+        background-size: 1rem 1rem;
+        transition: width 0.32s cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       .option-group {
         display: flex;
         flex-wrap: wrap;
         margin-bottom: -0.5rem;
+        gap: 0.5rem;
       }
 
       .option-group .btn {
-        margin: 0 0.5rem 0.5rem 0;
+        position: relative;
+        margin: 0;
+        padding: 0.8rem 1rem;
         white-space: normal;
         border-radius: 0.25rem !important;
+        border-color: rgba(143, 95, 31, 0.16);
+        color: var(--ink-strong);
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 0.65rem 1.3rem rgba(70, 49, 21, 0.06);
+        transition:
+          transform 0.16s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease,
+          background-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .option-group .btn:hover,
+      .option-group .btn:focus-within {
+        transform: translateY(-1px);
+        border-color: rgba(197, 138, 52, 0.42);
+        box-shadow: 0 0.95rem 1.7rem rgba(88, 61, 24, 0.12);
+      }
+
+      .option-group .btn:active {
+        transform: translateY(0);
+      }
+
+      .option-group .btn.active {
+        color: #fff;
+        border-color: rgba(143, 95, 31, 0.92);
+        background: linear-gradient(135deg, var(--accent-gold), #dba44a);
+        box-shadow: 0 1rem 2rem rgba(143, 95, 31, 0.24);
       }
 
       .question-row {
         margin-bottom: 1.5rem;
+        padding-bottom: 1.1rem;
+        border-bottom: 1px dashed rgba(143, 95, 31, 0.12);
       }
 
       .question-row:last-child {
         margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      .question-label {
+        color: var(--ink-strong);
+        font-weight: 600;
       }
 
       .validation-alert {
         margin-bottom: 1rem;
+        border: 0;
+        border-radius: 0.95rem;
+        color: #7a2e20;
+        background: linear-gradient(135deg, rgba(255, 229, 221, 0.96), rgba(255, 244, 241, 0.98));
+        box-shadow: 0 0.8rem 1.8rem rgba(122, 46, 32, 0.08);
       }
 
       .validation-alert[hidden] {
         display: none !important;
       }
 
+      .finish-panel {
+        position: relative;
+        overflow: hidden;
+        padding: 2rem 1.1rem 1.25rem;
+        text-align: center;
+        border-radius: 1.25rem;
+        border: 1px dashed rgba(143, 95, 31, 0.26);
+        background:
+          radial-gradient(circle at top, rgba(197, 138, 52, 0.14), transparent 42%),
+          linear-gradient(180deg, rgba(255, 249, 236, 0.98), rgba(255, 255, 255, 0.96));
+      }
+
+      .finish-panel::before {
+        content: "Final Score";
+        display: block;
+        margin-bottom: 0.75rem;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--accent-gold-deep);
+      }
+
       .finish-panel p {
         margin-bottom: 1rem;
       }
 
+      #resultCalc {
+        padding: 0.85rem 1.6rem;
+        border-radius: 999px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        box-shadow: 0 1rem 2rem rgba(47, 141, 105, 0.2);
+        transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+      }
+
+      #resultCalc:hover,
+      #resultCalc:focus-visible {
+        transform: translateY(-1px);
+        box-shadow: 0 1.15rem 2.2rem rgba(47, 141, 105, 0.26);
+        filter: saturate(1.04);
+      }
+
+      #points {
+        font-size: clamp(1.45rem, 3vw, 2.1rem);
+        color: var(--accent-gold-deep);
+      }
+
+      #qoute {
+        max-width: 38rem;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+        line-height: 1.45;
+      }
+
       #cowImages img {
-        margin: 0 0.35rem 0.35rem 0;
+        width: 40px;
+        margin: 0;
+        filter: drop-shadow(0 0.55rem 0.85rem rgba(93, 61, 20, 0.18));
+        transform-origin: center bottom;
+      }
+
+      #cowImages {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem;
+        min-height: 3rem;
       }
 
       .wizard-actions .btn {
         min-height: 2.75rem;
+        border-radius: 999px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        box-shadow: 0 0.8rem 1.55rem rgba(70, 49, 21, 0.08);
+        transition: transform 0.16s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      }
+
+      .wizard-actions .btn:hover:not(:disabled),
+      .wizard-actions .btn:focus-visible {
+        transform: translateY(-1px);
+        box-shadow: 0 1rem 1.8rem rgba(88, 61, 24, 0.14);
+      }
+
+      .wizard-actions .btn:disabled {
+        box-shadow: none;
+      }
+
+      .status-bump,
+      .panel-enter,
+      .attention-pop,
+      .result-pop {
+        animation-duration: 0.34s;
+        animation-fill-mode: both;
+        animation-timing-function: ease;
+      }
+
+      .status-bump {
+        animation-name: statusBump;
+      }
+
+      .panel-enter {
+        animation-name: panelEnter;
+      }
+
+      .attention-pop {
+        animation-name: attentionPop;
+      }
+
+      .result-pop {
+        animation-name: resultPop;
+      }
+
+      .finish-panel.finish-revealed {
+        box-shadow: 0 1.2rem 2.4rem rgba(88, 61, 24, 0.12);
+      }
+
+      .finish-panel.finish-revealed #cowImages img {
+        animation: cowPop 0.35s ease both;
+      }
+
+      .option-group .btn.active,
+      .finish-panel.finish-revealed #points,
+      .finish-panel.finish-revealed #qoute {
+        animation: optionPop 0.24s ease both;
+      }
+
+      .option-group .btn:focus-within,
+      .wizard-actions .btn:focus-visible,
+      #resultCalc:focus-visible,
+      .share-links a:focus-visible,
+      .wizard-stepper .step-trigger:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 0.24rem rgba(197, 138, 52, 0.18);
+      }
+
+      @keyframes panelEnter {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes statusBump {
+        0% {
+          transform: translateY(6px);
+          opacity: 0.92;
+        }
+
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes attentionPop {
+        0% {
+          opacity: 0;
+          transform: translateY(-6px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes resultPop {
+        0% {
+          opacity: 0.92;
+          transform: scale(0.985);
+        }
+
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes cowPop {
+        0% {
+          opacity: 0;
+          transform: translateY(12px) scale(0.88);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes optionPop {
+        0% {
+          transform: scale(0.98);
+        }
+
+        100% {
+          transform: scale(1);
+        }
       }
 
       @media (max-width: 991.98px) {
@@ -131,6 +525,10 @@
           padding: 1rem;
         }
 
+        .hero-intro h1 {
+          letter-spacing: 0.02em;
+        }
+
         .wizard-stepper .step {
           flex: 1 0 48%;
         }
@@ -143,14 +541,29 @@
           width: 100%;
         }
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+
+        .option-group .btn:hover,
+        .share-links a:hover,
+        .wizard-actions .btn:hover:not(:disabled),
+        #resultCalc:hover {
+          transform: none !important;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <section id="wizard">
+      <section id="wizard" aria-labelledby="wizardTitle">
         <div class="wizard-card">
-          <div class="pb-3 mb-4 border-bottom">
-            <h1 class="heading-font">Lobola Calculator</h1>
+          <div class="hero-intro pb-3 mb-4 border-bottom">
+            <h1 class="heading-font" id="wizardTitle">Lobola Calculator</h1>
 
             <p>Designed after 157 hours of consultations, 45 meetings and meeting with over 100 elders</p>
 
@@ -513,9 +926,9 @@
               <div class="content finish-panel" id="tab6" role="tabpanel" aria-labelledby="tab6-trigger">
                 <button type="button" id="resultCalc" class="btn btn-success btn-lg mb-3" onclick="calculateResults()">Generate Quote!</button>
 
-                <p id="points" class="heading-font"></p>
+                <p id="points" class="heading-font result-points"></p>
 
-                <p id="qoute" class="heading-font"></p>
+                <p id="qoute" class="heading-font result-quote"></p>
 
                 <div id="cowImages"></div>
               </div>
@@ -564,6 +977,12 @@
         var stepTriggers = stepElements.map(function (stepEl) {
           return stepEl.querySelector(SELECTORS.stepTrigger);
         });
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var messageInfoDialog = document.getElementById('messageInfoDialog');
+        var finishPanel = document.getElementById('tab6');
+        var pointsEl = document.getElementById('points');
+        var quoteEl = document.getElementById('qoute');
+        var cowImagesEl = document.getElementById('cowImages');
         var totalSteps = stepElements.length;
         var currentStepIndex = 0;
         var navigationBusy = false;
@@ -612,6 +1031,16 @@
           return Math.round(((stepIndex + 1) / totalSteps) * 100);
         }
 
+        function replayAnimation(element, className) {
+          if (!element || prefersReducedMotion) {
+            return;
+          }
+
+          element.classList.remove(className);
+          void element.offsetWidth;
+          element.classList.add(className);
+        }
+
         function getAlert(stepNumber) {
           var panel = stepPanels[stepNumber - 1];
 
@@ -628,6 +1057,7 @@
           if (message) {
             alertEl.innerHTML = message;
             alertEl.hidden = false;
+            replayAnimation(alertEl, 'attention-pop');
             return;
           }
 
@@ -717,11 +1147,37 @@
           nextButton.setAttribute('aria-disabled', String(nextButton.disabled));
         }
 
+        function decorateCowImages() {
+          if (!cowImagesEl || prefersReducedMotion) {
+            return;
+          }
+
+          Array.prototype.forEach.call(cowImagesEl.querySelectorAll('img'), function (img, index) {
+            img.style.animationDelay = String(Math.min(index, 10) * 45) + 'ms';
+          });
+        }
+
+        function revealResultState() {
+          if (!finishPanel || !pointsEl || !quoteEl) {
+            return;
+          }
+
+          if (!pointsEl.textContent.trim() && !quoteEl.textContent.trim() && !cowImagesEl.children.length) {
+            return;
+          }
+
+          finishPanel.classList.add('finish-revealed');
+          decorateCowImages();
+          replayAnimation(finishPanel, 'result-pop');
+        }
+
         function syncUi(stepIndex) {
           currentStepIndex = stepIndex;
+          stepperEl.setAttribute('data-current-step', String(stepIndex + 1));
           syncProgress(stepIndex);
           syncStepAccessibility(stepIndex);
           syncNavigation(stepIndex);
+          replayAnimation(stepPanels[stepIndex], 'panel-enter');
         }
 
         function releaseNavigationLock() {
@@ -798,6 +1254,26 @@
         nextButton.addEventListener('click', function () {
           requestStepChange('next');
         });
+
+        if (window.MutationObserver && messageInfoDialog) {
+          new MutationObserver(function () {
+            replayAnimation(messageInfoDialog, 'status-bump');
+          }).observe(messageInfoDialog, {
+            childList: true,
+            subtree: true,
+            characterData: true
+          });
+        }
+
+        if (window.MutationObserver && finishPanel) {
+          new MutationObserver(function () {
+            revealResultState();
+          }).observe(finishPanel, {
+            childList: true,
+            subtree: true,
+            characterData: true
+          });
+        }
 
         syncUi(getCurrentStepIndex());
       });

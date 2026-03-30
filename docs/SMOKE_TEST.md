@@ -45,6 +45,7 @@ Use a mobile width around `390px`.
 
 ## Regression Guardrails
 
+- With `prefers-reduced-motion` enabled, the UI should stay readable and usable without relying on animation.
 - Do not change the `label.active input` scoring selector contract unless all dependent logic is updated safely.
 - Do not rename the answer group IDs without updating every selector in the existing JS.
 - Do not change questionnaire flow, scoring rules, or result text as part of UI-only cleanup.

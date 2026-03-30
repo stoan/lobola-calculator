@@ -42,3 +42,17 @@ On Windows, `py -m http.server 8000` works as well.
 ## Smoke Testing
 
 A lightweight manual smoke checklist lives in [docs/SMOKE_TEST.md](docs/SMOKE_TEST.md).
+
+## UI Polish Notes
+
+The current UI adds a small polish layer on top of the stable Bootstrap 4 + `bs-stepper` migration:
+
+- subtle step reveal animation
+- smoother progress-bar motion
+- stronger hover/focus/selected states for answer buttons
+- a more distinct finish/result presentation
+- gentle status and validation feedback
+
+Reduced motion is respected through `prefers-reduced-motion`, which disables the non-essential animation and hover movement while keeping the interface fully usable.
+
+Important selector constraint: the questionnaire still intentionally preserves the `label.active input` contract because `calculations.js` depends on it. Shared radio naming and inline answer handlers are also intentionally left in place for compatibility.
