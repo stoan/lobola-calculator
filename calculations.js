@@ -1,24 +1,34 @@
 // Calculations
 
-/**
- * Score-to-value mapping for the 30–49 range.
- * Scores outside this range use fixed tiers.
- */
-const SCORE_VALUE_MAP = {
-  30: 15000, 31: 20000, 32: 23000, 33: 25000, 34: 27000,
-  35: 28000, 36: 30000, 37: 33000, 38: 35000, 39: 40000,
-  40: 42000, 41: 45000, 42: 48000, 43: 50000, 44: 55000,
-  45: 57000, 46: 60000, 47: 62000, 48: 64000, 49: 67000
-};
+const RESULT_GROUPS = [
+  '#eduGroup', '#virGroup', '#kidGroup', '#boyGroup',
+  '#marriageGroup', '#employmentGroup', '#carGroup', '#houseGroup',
+  '#cookGroup', '#bedroomGroup', '#socialGroup', '#royalGroup',
+  '#housewiveGroup', '#incomeGroup', '#hairGroup', '#drinkGroup'
+];
 
-/**
- * Returns the number of cow images for a given score.
- */
-function getCowCount(totalScore) {
-  if (totalScore > 60) return 20;
-  if (totalScore >= 35) return 11;  // 35–60
-  if (totalScore >= 20) return 8;   // 20–34
-  return 5;                         // < 20
+const RAW_SCORE_MIN = 12;
+const RAW_SCORE_MAX = 69;
+const RAND_MIN = 10000;
+const RAND_MAX = 100000;
+const RAND_ROUNDING_INCREMENT = 1000;
+const COW_ICON_MIN = 1;
+const COW_ICON_MAX = 10;
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function roundToIncrement(value, increment) {
+  return Math.round(value / increment) * increment;
+}
+
+function formatRand(value) {
+  return 'R' + value.toLocaleString('en-US');
+}
+
+function dispatchResultEvent(name, detail) {
+  document.dispatchEvent(new CustomEvent(name, { detail: detail }));
 }
 
 /**
@@ -30,56 +40,95 @@ function getGroupValue(selector) {
   return Number.parseInt(val, 10) || 0;
 }
 
+function calculateRawScore() {
+  return RESULT_GROUPS.reduce(function (sum, groupSelector) {
+    return sum + getGroupValue(groupSelector);
+  }, 0);
+}
+
+/**
+ * Remaps the raw questionnaire score into the visible Rand range.
+ */
+function mapScoreToRand(totalScore) {
+  const boundedScore = clamp(totalScore, RAW_SCORE_MIN, RAW_SCORE_MAX);
+  const normalizedScore = (boundedScore - RAW_SCORE_MIN) / (RAW_SCORE_MAX - RAW_SCORE_MIN);
+  const rawRandValue = RAND_MIN + normalizedScore * (RAND_MAX - RAND_MIN);
+  const roundedRandValue = roundToIncrement(rawRandValue, RAND_ROUNDING_INCREMENT);
+
+  return clamp(roundedRandValue, RAND_MIN, RAND_MAX);
+}
+
+/**
+ * Scales cow icons to the displayed Rand estimate instead of raw score tiers.
+ */
+function getCowCount(randValue) {
+  const normalizedValue = (clamp(randValue, RAND_MIN, RAND_MAX) - RAND_MIN) / (RAND_MAX - RAND_MIN);
+  const cowCount = Math.round(normalizedValue * (COW_ICON_MAX - COW_ICON_MIN)) + COW_ICON_MIN;
+
+  return clamp(cowCount, COW_ICON_MIN, COW_ICON_MAX);
+}
+
+/**
+ * Renders cow images into #cowImages and keeps the container accessible.
+ */
+function showCowImages(count, formattedRand) {
+  let html = '';
+  const cowImagesEl = document.getElementById('cowImages');
+
+  for (let i = 0; i < count; i++) {
+    html += '<img src="cow-icon-48.png" alt="" aria-hidden="true">';
+  }
+
+  cowImagesEl.innerHTML = html;
+  cowImagesEl.setAttribute('role', 'img');
+  cowImagesEl.setAttribute(
+    'aria-label',
+    count + (count === 1 ? ' cow' : ' cows') + ' shown for the ' + formattedRand + ' estimate.'
+  );
+}
+
 /**
  * Main calculation — sums all group scores and maps to a Rand value.
  */
 function calculateResults() {
-  const groups = [
-    '#eduGroup', '#virGroup', '#kidGroup', '#boyGroup',
-    '#marriageGroup', '#employmentGroup', '#carGroup', '#houseGroup',
-    '#cookGroup', '#bedroomGroup', '#socialGroup', '#royalGroup',
-    '#housewiveGroup', '#incomeGroup', '#hairGroup', '#drinkGroup'
-  ];
+  const totalScore = calculateRawScore();
+  const randValue = mapScoreToRand(totalScore);
+  const formattedRand = formatRand(randValue);
+  const cowCount = getCowCount(randValue);
+  const pointsEl = document.getElementById('points');
+  const scoreSummaryEl = document.getElementById('scoreSummary');
 
-  const totalScore = groups.reduce(function (sum, g) {
-    return sum + getGroupValue(g);
-  }, 0);
+  dispatchResultEvent('lobola:result-reveal-start', {
+    totalScore: totalScore
+  });
 
-  let randValue;
-
-  if (totalScore > 60) {
-    randValue = 100000;
-  } else if (totalScore >= 50) {
-    randValue = 80000;
-  } else if (totalScore >= 30 && SCORE_VALUE_MAP[totalScore]) {
-    randValue = SCORE_VALUE_MAP[totalScore];
-  } else if (totalScore >= 20) {
-    randValue = 10000;
-  } else {
-    randValue = 5000;
-  }
-
-  const cowCount = getCowCount(totalScore);
-  showCowImages(cowCount);
+  showCowImages(cowCount, formattedRand);
 
   document.getElementById('qoute').innerHTML =
-    'Please inform your boyfriend to start budgeting R ' + randValue.toLocaleString() +
+    'Please inform your boyfriend to start budgeting ' + formattedRand +
     ' if he wants to put a ring on that finger.';
 
   document.getElementById('messageInfoDialog').innerHTML =
-    'Congratulations &#9786; your Lobola negotiations should start from R ' + randValue.toLocaleString();
+    'Congratulations &#9786; your Lobola negotiations should start from ' + formattedRand + '.';
 
-  document.getElementById('points').innerHTML =
-    'You scored ' + totalScore + ' points.';
-}
-
-/**
- * Renders cow images into #cowImages (builds HTML in one go instead of per-iteration).
- */
-function showCowImages(count) {
-  let html = '';
-  for (let i = 0; i < count; i++) {
-    html += '<img src="cow-icon-48.png" alt="cow"> ';
+  if (pointsEl) {
+    pointsEl.innerHTML = formattedRand;
   }
-  document.getElementById('cowImages').innerHTML = html;
+
+  if (scoreSummaryEl) {
+    scoreSummaryEl.innerHTML =
+      'Cow meter: ' + cowCount +
+      (cowCount === 1 ? ' cow.' : ' cows.');
+  }
+
+  dispatchResultEvent('lobola:results-calculated', {
+    totalScore: totalScore,
+    randValue: randValue,
+    formattedRand: formattedRand,
+    cowCount: cowCount,
+    rawScoreRange: {
+      min: RAW_SCORE_MIN,
+      max: RAW_SCORE_MAX
+    }
+  });
 }

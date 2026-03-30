@@ -420,7 +420,11 @@
                   <button type="button" id="resultCalc" class="btn btn-success btn-lg mb-3" onclick="calculateResults()">Reveal Final Quote</button>
 
                   <div class="result-stage">
+                    <p class="result-label">Estimated lobola</p>
+
                     <p id="points" class="heading-font result-points"></p>
+
+                    <p id="scoreSummary" class="result-score"></p>
 
                     <p id="qoute" class="heading-font result-quote"></p>
 
@@ -478,6 +482,8 @@
         var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var messageInfoDialog = document.getElementById('messageInfoDialog');
         var finishPanel = document.getElementById('tab6');
+        var resultButton = document.getElementById('resultCalc');
+        var resultStageEl = finishPanel ? finishPanel.querySelector('.result-stage') : null;
         var pointsEl = document.getElementById('points');
         var quoteEl = document.getElementById('qoute');
         var cowImagesEl = document.getElementById('cowImages');
@@ -720,8 +726,24 @@
           });
         }
 
+        function resetResultRevealState() {
+          if (!finishPanel) {
+            return;
+          }
+
+          finishPanel.classList.remove('finish-revealed', 'result-spotlight');
+
+          if (resultButton) {
+            resultButton.classList.remove('reveal-armed');
+          }
+
+          if (!prefersReducedMotion) {
+            void finishPanel.offsetWidth;
+          }
+        }
+
         function revealResultState() {
-          if (!finishPanel || !pointsEl || !quoteEl) {
+          if (!finishPanel || !resultStageEl || !pointsEl || !quoteEl) {
             return;
           }
 
@@ -729,7 +751,13 @@
             return;
           }
 
+          if (resultButton) {
+            replayAnimation(resultButton, 'reveal-armed');
+          }
+
+          replayAnimation(resultStageEl, 'result-spotlight');
           finishPanel.classList.add('finish-revealed');
+          finishPanel.classList.add('result-spotlight');
           decorateCowImages();
           replayAnimation(finishPanel, 'result-pop');
         }
@@ -830,15 +858,13 @@
           });
         }
 
-        if (window.MutationObserver && finishPanel) {
-          new MutationObserver(function () {
-            revealResultState();
-          }).observe(finishPanel, {
-            childList: true,
-            subtree: true,
-            characterData: true
-          });
-        }
+        document.addEventListener('lobola:result-reveal-start', function () {
+          resetResultRevealState();
+        });
+
+        document.addEventListener('lobola:results-calculated', function () {
+          revealResultState();
+        });
 
         syncUi(getCurrentStepIndex());
       });

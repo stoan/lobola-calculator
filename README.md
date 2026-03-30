@@ -20,7 +20,7 @@ The wizard migration intentionally stopped at Bootstrap 4.x. Do not mix old Boot
 
 ## Compatibility Notes
 
-`calculations.js` and `messages.js` were intentionally left functionally unchanged during the migration and hardening pass. The current questionnaire still relies on the existing selector contract:
+`messages.js` still only drives the per-answer info dialogue, while `calculations.js` now remaps the final questionnaire score into the current Rand display range. The questionnaire still relies on the existing selector contract:
 
 - answer groups keep their existing IDs such as `#eduGroup`
 - scoring reads the active choice through `label.active input`
@@ -52,9 +52,25 @@ The current UI pushes the stable Bootstrap 4 + `bs-stepper` migration into a str
 - richer step states for current, completed, and upcoming rounds
 - smoother progress-bar movement and step-panel reveal motion
 - larger answer buttons with stronger hover, focus, and locked-in selected states
-- a more dramatic finish board and result reveal for the final quote and cow output
+- a more dramatic finish board and result reveal for the final quote, price card, and cow output
 - subtle status and validation feedback that still stays fast on mobile
 
 Motion stays CSS-first and respects `prefers-reduced-motion`, which disables non-essential animation and hover movement while keeping every state change readable and usable.
 
 Important selector constraint: the questionnaire still intentionally preserves the `label.active input` contract because `calculations.js` depends on it. Shared radio naming, answer group IDs, and inline answer handlers are also intentionally left in place for compatibility.
+
+## Result Range Notes
+
+The current scoring model keeps the existing questionnaire inputs but remaps the verified raw score range of `12` to `69` into a displayed lobola estimate range of `R10,000` to `R100,000`.
+
+- higher raw score still means a higher estimate
+- the displayed amount is linearly normalized across the raw range
+- the displayed amount is rounded to the nearest `R1,000` for readability
+- cow icons now scale from `1` to `10` based on the displayed Rand estimate instead of the older raw-score tiers
+- clicking `#resultCalc` now triggers a replayable reveal animation for the button, result board, and cow display
+
+Legacy contracts intentionally preserved:
+
+- `label.active input` remains the scoring selector contract
+- answer group IDs such as `#eduGroup` remain stable
+- the existing questions, answers, flow, and inline answer handlers remain in place
