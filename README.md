@@ -73,7 +73,7 @@ The current scoring model keeps the existing questionnaire inputs but remaps the
 - higher raw score still means a higher estimate
 - the displayed amount is linearly normalized across the raw range
 - the displayed amount is rounded to the nearest `R1,000` for readability
-- cow icons now scale from `1` to `10` based on the displayed Rand estimate instead of the older raw-score tiers
+- cow icons now scale separately from `1` to `11` based on the displayed Rand estimate instead of the older raw-score tiers
 - clicking `#resultCalc` now triggers a replayable reveal animation for the button, result board, and cow display
 
 Legacy contracts intentionally preserved:

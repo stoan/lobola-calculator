@@ -13,7 +13,7 @@ const RAND_MIN = 10000;
 const RAND_MAX = 100000;
 const RAND_ROUNDING_INCREMENT = 1000;
 const COW_ICON_MIN = 1;
-const COW_ICON_MAX = 10;
+const COW_ICON_MAX = 11;
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);

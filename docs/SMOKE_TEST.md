@@ -28,6 +28,7 @@ Use a desktop width around `1280px`.
 - Complete all steps and confirm the Finish step shows `100%`.
 - Clicking `Reveal Final Quote` updates the Rand estimate, score summary, quote text, info message, and cow images.
 - The final estimate stays between `R10,000` and `R100,000`.
+- The cow count stays between `1` and `11`.
 - Clicking `Reveal Final Quote` again replays the reveal cleanly without breaking the result state.
 - The fairness section appears only on the reveal screen.
 - Clicking `👍 Yes` or `👎 No` shows a clear selected state and reveals the optional comment area.
