@@ -51,20 +51,19 @@ On Windows, `py -m http.server 8000` works as well.
 
 A lightweight manual smoke checklist lives in [docs/SMOKE_TEST.md](docs/SMOKE_TEST.md).
 
-## Quiz-Show UI Notes
+## Game-Show UI Notes
 
-The current UI pushes the stable Bootstrap 4 + `bs-stepper` migration into a stronger quiz-show presentation while keeping the app static and lightweight:
+The current UI is a presentation-only redesign inspired by a dramatic prime-time quiz show atmosphere while keeping the app static and lightweight:
 
-- a stage-like hero and round banner to make each step feel like a show segment
-- richer step states for current, completed, and upcoming rounds
-- smoother progress-bar movement and step-panel reveal motion
-- larger answer buttons with stronger hover, focus, and locked-in selected states
-- a more dramatic finish board and result reveal for the final quote, price card, and cow output
-- subtle status and validation feedback that still stays fast on mobile
+- a dark stage backdrop with spotlight gradients and marquee accents around the main card
+- a stronger round banner and step rail so the flow feels like advancing through televised rounds
+- larger answer buttons styled like “final answer” choices with a more obvious locked-in state
+- a more cinematic reveal board for the final amount, cow meter, quote, and fairness feedback section
+- short CSS-first motion for panel entry, answer lock-in, progress emphasis, and the final reveal moment
 
-Motion stays CSS-first and respects `prefers-reduced-motion`, which disables non-essential animation and hover movement while keeping every state change readable and usable.
+Motion still respects `prefers-reduced-motion`, which disables non-essential animation and hover movement while keeping every state change readable and usable.
 
-Important selector constraint: the questionnaire still intentionally preserves the `label.active input` contract because `calculations.js` depends on it. Shared radio naming, answer group IDs, and inline answer handlers are also intentionally left in place for compatibility.
+Important compatibility note: this redesign does not change questionnaire logic. The app still intentionally preserves the `label.active input` scoring contract, the existing answer group IDs, shared radio naming, and the inline answer handlers because `calculations.js` and `messages.js` still depend on those hooks.
 
 ## Result Range Notes
 
