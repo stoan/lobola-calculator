@@ -17,13 +17,14 @@ Open `http://localhost:8000/index.html`.
 Use a desktop width around `1280px`.
 
 - The page loads without console errors.
-- The step header shows all 6 stages and remains readable.
+- The hero, round banner, and step header show the quiz-show framing clearly and remain readable.
 - The progress bar starts at `17%`.
 - Clicking `Next` on Step 1 without answering shows the Step 1 validation alert.
 - Answer all questions in Step 1 and `Next` advances to Step 2.
+- The round banner updates when the active step changes.
 - `Previous` returns to Step 1 without losing the visible active selections.
 - Complete all steps and confirm the Finish step shows `100%`.
-- Clicking `Generate Quote!` updates the score, quote text, info message, and cow images.
+- Clicking `Reveal Final Quote` updates the score, quote text, info message, and cow images.
 
 ## Tablet Check
 
@@ -38,6 +39,7 @@ Use a tablet width around `768px`.
 Use a mobile width around `390px`.
 
 - Step headers wrap into multiple rows without overlapping.
+- The round banner and progress chip stay readable without clipping.
 - The page does not introduce horizontal scrolling.
 - Answer buttons remain readable and easy to tap.
 - Previous and Next buttons stack cleanly.
@@ -46,6 +48,7 @@ Use a mobile width around `390px`.
 ## Regression Guardrails
 
 - With `prefers-reduced-motion` enabled, the UI should stay readable and usable without relying on animation.
+- Current, completed, and upcoming step states should still be visually distinct even without motion.
 - Do not change the `label.active input` scoring selector contract unless all dependent logic is updated safely.
 - Do not rename the answer group IDs without updating every selector in the existing JS.
 - Do not change questionnaire flow, scoring rules, or result text as part of UI-only cleanup.

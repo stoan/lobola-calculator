@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Indie Flower";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("indie-flower-400.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Righteous";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("righteous-400.ttf") format("truetype");
+}

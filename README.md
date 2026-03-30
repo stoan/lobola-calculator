@@ -14,6 +14,7 @@ The site is a static HTML/CSS/JS app and now depends on:
 - local Bootstrap 4.6.2 assets in `bootstrap/`
 - local `bs-stepper` 1.7.0 assets in `vendor/bs-stepper/`
 - local jQuery 3.5.1 in `vendor/jquery/`
+- local show fonts in `vendor/fonts/`
 
 The wizard migration intentionally stopped at Bootstrap 4.x. Do not mix old Bootstrap 3 assets/classes back into the page.
 
@@ -43,16 +44,17 @@ On Windows, `py -m http.server 8000` works as well.
 
 A lightweight manual smoke checklist lives in [docs/SMOKE_TEST.md](docs/SMOKE_TEST.md).
 
-## UI Polish Notes
+## Quiz-Show UI Notes
 
-The current UI adds a small polish layer on top of the stable Bootstrap 4 + `bs-stepper` migration:
+The current UI pushes the stable Bootstrap 4 + `bs-stepper` migration into a stronger quiz-show presentation while keeping the app static and lightweight:
 
-- subtle step reveal animation
-- smoother progress-bar motion
-- stronger hover/focus/selected states for answer buttons
-- a more distinct finish/result presentation
-- gentle status and validation feedback
+- a stage-like hero and round banner to make each step feel like a show segment
+- richer step states for current, completed, and upcoming rounds
+- smoother progress-bar movement and step-panel reveal motion
+- larger answer buttons with stronger hover, focus, and locked-in selected states
+- a more dramatic finish board and result reveal for the final quote and cow output
+- subtle status and validation feedback that still stays fast on mobile
 
-Reduced motion is respected through `prefers-reduced-motion`, which disables the non-essential animation and hover movement while keeping the interface fully usable.
+Motion stays CSS-first and respects `prefers-reduced-motion`, which disables non-essential animation and hover movement while keeping every state change readable and usable.
 
-Important selector constraint: the questionnaire still intentionally preserves the `label.active input` contract because `calculations.js` depends on it. Shared radio naming and inline answer handlers are also intentionally left in place for compatibility.
+Important selector constraint: the questionnaire still intentionally preserves the `label.active input` contract because `calculations.js` depends on it. Shared radio naming, answer group IDs, and inline answer handlers are also intentionally left in place for compatibility.
