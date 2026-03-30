@@ -1,572 +1,806 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A fun Lobola Calculator — answer a few questions and find out your lobola price!">
     <title>Lobola Calculator</title>
-    <!-- Bootstrap -->
+
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="prettify.css" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
-	<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
-	
-	<script type="text/javascript">var switchTo5x=true;</script>
-<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript">stLight.options({publisher: "8cb7bd99-81fd-40bd-8ad0-e5353021547e", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+    <link href="vendor/bs-stepper/css/bs-stepper.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous|Indie+Flower&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
 
-  ga('create', 'UA-67935622-1', 'auto');
-  ga('send', 'pageview');
+      #wizard {
+        padding: 2rem 0 3rem;
+      }
 
-</script>
+      .heading-font {
+        font-family: "Righteous", cursive;
+      }
 
+      .tagline-font {
+        font-family: "Indie Flower", cursive;
+      }
 
+      .share-links {
+        margin-bottom: 1rem;
+      }
+
+      .share-links a {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .wizard-card {
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.5rem;
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+      }
+
+      .wizard-stepper .bs-stepper-header {
+        flex-wrap: wrap;
+        align-items: stretch;
+        margin-bottom: 1rem;
+      }
+
+      .wizard-stepper .step {
+        flex: 1 1 0;
+      }
+
+      .wizard-stepper .step-trigger {
+        width: 100%;
+        min-height: 100%;
+        justify-content: center;
+        padding: 0.75rem 0.5rem;
+        text-align: center;
+      }
+
+      .wizard-stepper .bs-stepper-label {
+        line-height: 1.25;
+      }
+
+      .wizard-stepper .progress {
+        height: 1.25rem;
+      }
+
+      .option-group {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: -0.5rem;
+      }
+
+      .option-group .btn {
+        margin: 0 0.5rem 0.5rem 0;
+        white-space: normal;
+        border-radius: 0.25rem !important;
+      }
+
+      .question-row {
+        margin-bottom: 1.5rem;
+      }
+
+      .question-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .validation-alert {
+        margin-bottom: 1rem;
+      }
+
+      .validation-alert[hidden] {
+        display: none !important;
+      }
+
+      .finish-panel p {
+        margin-bottom: 1rem;
+      }
+
+      #cowImages img {
+        margin: 0 0.35rem 0.35rem 0;
+      }
+
+      .wizard-actions .btn {
+        min-height: 2.75rem;
+      }
+
+      @media (max-width: 991.98px) {
+        .wizard-stepper .line {
+          display: none;
+        }
+
+        .wizard-stepper .step {
+          flex: 1 0 31%;
+          margin-bottom: 0.5rem;
+        }
+      }
+
+      @media (max-width: 767.98px) {
+        #wizard {
+          padding-top: 1rem;
+        }
+
+        .wizard-card {
+          padding: 1rem;
+        }
+
+        .wizard-stepper .step {
+          flex: 1 0 48%;
+        }
+
+        .question-label {
+          font-weight: 600;
+        }
+
+        .wizard-actions .btn {
+          width: 100%;
+        }
+      }
+    </style>
   </head>
-  <body> 
-  
-  
-    <div class='container'>
+  <body>
+    <div class="container">
+      <section id="wizard">
+        <div class="wizard-card">
+          <div class="pb-3 mb-4 border-bottom">
+            <h1 class="heading-font">Lobola Calculator</h1>
 
-			<section id="wizard">
-			  <div class="page-header">
-	            <div>
-	            <h1 style="font-family: 'Righteous', cursive;">Lobola Calculator</h1>
-	            </div>
-	            
-	             <p> Designed after 157 hours of consultations, 45 meetings and meeting with over 100 elders </p>
-	            
-	            <p style="font-family: 'Indie Flower', cursive;"> Remember God is watching you, be honest &#9786; just kidding but have fun!</p>
+            <p>Designed after 157 hours of consultations, 45 meetings and meeting with over 100 elders</p>
 
-                  <p><a href="https://en.wikipedia.org/wiki/Lobolo" target="_blank">What is Lobola?</a></p>
-	            
-	            
-	            <div class="alert alert-info" role="alert" id="messageInfoDialog">
-        Let's begin.
-		  </div>
-		  
-		  
-		  
-<span class='st_whatsapp_hcount' displayText='WhatsApp'></span>
-<span class='st_facebook_hcount' displayText='Facebook'></span>
-<span class='st_twitter_hcount' displayText='Tweet'></span>
-<span class='st_googleplus_hcount' displayText='Google +'></span>
-		  
-		  
-	            
-	          </div>
+            <p class="tagline-font">Remember God is watching you, be honest &#9786; just kidding but have fun!</p>
 
-				<div id="rootwizard">
-					<div class="navbar">
-					  <div class="navbar-inner">
-					    <div class="container">
-					<ul>
-					  	<li><a href="#tab1" data-toggle="tab">Step 1</a></li>
-						<li><a href="#tab2" data-toggle="tab">Step 2</a></li>
-						<li><a href="#tab3" data-toggle="tab">Step 3</a></li>
-						<li><a href="#tab4" data-toggle="tab">Step 4</a></li>
-						<li><a href="#tab5" data-toggle="tab">Step 5</a></li>
-						<li><a href="#tab6" data-toggle="tab">Finish</a></li>
-						
-					</ul>
-					 </div>
-					  </div>
-					</div>
-                    <div id="bar" class="progress progress-striped active">
-                      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+            <p><a href="https://en.wikipedia.org/wiki/Lobolo" target="_blank" rel="noopener">What is Lobola?</a></p>
+
+            <div class="alert alert-info" role="status" aria-live="polite" aria-atomic="true" id="messageInfoDialog">
+              Let&#39;s begin.
+            </div>
+
+            <div class="share-links">
+              <a href="https://wa.me/?text=Check%20out%20the%20Lobola%20Calculator!" target="_blank" rel="noopener" class="btn btn-sm btn-success">WhatsApp</a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.lobolo.co.za" target="_blank" rel="noopener" class="btn btn-sm btn-primary">Facebook</a>
+              <a href="https://twitter.com/intent/tweet?url=http://www.lobolo.co.za&text=Check%20out%20the%20Lobola%20Calculator!" target="_blank" rel="noopener" class="btn btn-sm btn-info">Tweet</a>
+            </div>
+          </div>
+
+          <div id="rootwizard" class="bs-stepper wizard-stepper">
+            <div class="bs-stepper-header" role="tablist" aria-orientation="horizontal">
+              <div class="step" data-target="#tab1">
+                <button type="button" class="step-trigger" role="tab" aria-controls="tab1" id="tab1-trigger">
+                  <span class="bs-stepper-circle">1</span>
+                  <span class="bs-stepper-label">Step 1</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#tab2">
+                <button type="button" class="step-trigger" role="tab" aria-controls="tab2" id="tab2-trigger">
+                  <span class="bs-stepper-circle">2</span>
+                  <span class="bs-stepper-label">Step 2</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#tab3">
+                <button type="button" class="step-trigger" role="tab" aria-controls="tab3" id="tab3-trigger">
+                  <span class="bs-stepper-circle">3</span>
+                  <span class="bs-stepper-label">Step 3</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#tab4">
+                <button type="button" class="step-trigger" role="tab" aria-controls="tab4" id="tab4-trigger">
+                  <span class="bs-stepper-circle">4</span>
+                  <span class="bs-stepper-label">Step 4</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#tab5">
+                <button type="button" class="step-trigger" role="tab" aria-controls="tab5" id="tab5-trigger">
+                  <span class="bs-stepper-circle">5</span>
+                  <span class="bs-stepper-label">Step 5</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#tab6">
+                <button type="button" class="step-trigger" role="tab" aria-controls="tab6" id="tab6-trigger">
+                  <span class="bs-stepper-circle">6</span>
+                  <span class="bs-stepper-label">Finish</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="bar" class="progress mb-4" aria-label="Questionnaire progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100" aria-valuetext="17% complete" style="width: 17%;">17%</div>
+            </div>
+
+            <div class="bs-stepper-content px-0">
+              <div class="content" id="tab1" role="tabpanel" aria-labelledby="tab1-trigger">
+                <div class="alert alert-danger validation-alert" id="tab1ValidationAlert" role="alert" aria-live="assertive" aria-atomic="true" hidden></div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">What is your highest level of education?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="eduGroup">
+                      <label class="btn btn-secondary" onclick="noMatric()">
+                        <input type="radio" id="belowMatricRadio" name="quality[25]" value="0" autocomplete="off"> Below Matric
+                      </label>
+                      <label class="btn btn-secondary" onclick="matric()">
+                        <input type="radio" id="matricRadio" name="quality[25]" value="1" autocomplete="off"> Matric
+                      </label>
+                      <label class="btn btn-secondary" onclick="diploma()">
+                        <input type="radio" id="diplomaRadio" name="quality[25]" value="2" autocomplete="off"> Diploma
+                      </label>
+                      <label class="btn btn-secondary" onclick="degree()">
+                        <input type="radio" id="degreeRadio" name="quality[25]" value="3" autocomplete="off"> Degree
+                      </label>
+                      <label class="btn btn-secondary" onclick="aboveDegree()">
+                        <input type="radio" id="aboveDegreeRadio" name="quality[25]" value="4" autocomplete="off"> Above Degree
+                      </label>
                     </div>
-					<div class="tab-content">
-					
-					
-				<div class="tab-pane" id="tab1">
-				
-				<div class="alert alert-danger" id="tab1ValidationAlert"></div>			
-				
-					     
-	<div class="row">
-        <div class="col-sm-3">What is your highest level of education?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="eduGroup">
-                <label class="btn btn-default" onclick="noMatric()">
-                    <input type="radio" id="belowMatricRadio" name="quality[25]" value="0" /> Below Matric
-                </label> 
-                <label class="btn btn-default" onclick="matric()">
-                    <input type="radio" id="matricRadio" name="quality[25]"  value="1" /> Matric
-                </label> 
-                <label class="btn btn-default" onclick="diploma()">
-                    <input type="radio" id="diplomaRadio" name="quality[25]" value="2" /> Diploma
-                </label> 
-                <label class="btn btn-default" onclick="degree()">
-                    <input type="radio" id="degreeRadio" name="quality[25]" value="3" /> Degree
-                </label> 
-                <label class="btn btn-default" onclick="aboveDegree()">
-                    <input type="radio" id="aboveDegreeRadio" name="quality[25]" value="4" /> Above Degree
-                </label>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Are you a virgin?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="virGroup">
+                      <label class="btn btn-secondary" onclick="virginYes()">
+                        <input type="radio" id="virginYesRadio" name="quality[25]" value="10" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="virginNo()">
+                        <input type="radio" id="virginNoRadio" name="quality[25]" value="2" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">How many children do you have?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="kidGroup">
+                      <label class="btn btn-secondary" onclick="kidNone()">
+                        <input type="radio" id="kidNoneRadio" name="quality[25]" value="2" autocomplete="off"> None
+                      </label>
+                      <label class="btn btn-secondary" onclick="kidOne()">
+                        <input type="radio" id="kidOneRadio" name="quality[25]" value="1" autocomplete="off"> 1
+                      </label>
+                      <label class="btn btn-secondary" onclick="kidTwo()">
+                        <input type="radio" id="kidTwoRadio" name="quality[25]" value="0" autocomplete="off"> 2
+                      </label>
+                      <label class="btn btn-secondary" onclick="kidThree()">
+                        <input type="radio" id="kidThreeRadio" name="quality[25]" value="0" autocomplete="off"> 3 or more
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="content" id="tab2" role="tabpanel" aria-labelledby="tab2-trigger">
+                <div class="alert alert-danger validation-alert" id="tab2ValidationAlert" role="alert" aria-live="assertive" aria-atomic="true" hidden></div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">How many boyfriends have you had in the past?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="boyGroup">
+                      <label class="btn btn-secondary" onclick="boyfriendLevelOne()">
+                        <input type="radio" id="boyfriendLevelOneRadio" name="quality[25]" value="3" autocomplete="off"> 0-5
+                      </label>
+                      <label class="btn btn-secondary" onclick="boyfriendLevelTwo()">
+                        <input type="radio" id="boyfriendLevelTwoRadio" name="quality[25]" value="2" autocomplete="off"> 6-10
+                      </label>
+                      <label class="btn btn-secondary" onclick="boyfriendLevelThree()">
+                        <input type="radio" id="boyfriendLevelThreeRadio" name="quality[25]" value="1" autocomplete="off"> 10-15
+                      </label>
+                      <label class="btn btn-secondary" onclick="boyfriendLevelFour()">
+                        <input type="radio" id="boyfriendLevelFourRadio" name="quality[25]" value="0" autocomplete="off"> 16 or more
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Have you been married before?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="marriageGroup">
+                      <label class="btn btn-secondary" onclick="marriedYes()">
+                        <input type="radio" id="marriedYesRadio" name="quality[25]" value="1" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="marriedNo()">
+                        <input type="radio" id="marriedNoRadio" name="quality[25]" value="3" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">What is your current employment status?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="employmentGroup">
+                      <label class="btn btn-secondary" onclick="employmentJob()">
+                        <input type="radio" id="employmentJobRadio" name="quality[25]" value="2" autocomplete="off"> Job
+                      </label>
+                      <label class="btn btn-secondary" onclick="employmentCareer()">
+                        <input type="radio" id="employmentCareerRadio" name="quality[25]" value="3" autocomplete="off"> Career driven
+                      </label>
+                      <label class="btn btn-secondary" onclick="employmentUnmployed()">
+                        <input type="radio" id="employmentUnmployedRadio" name="quality[25]" value="0" autocomplete="off"> Unemployed
+                      </label>
+                      <label class="btn btn-secondary" onclick="employmentBusiness()">
+                        <input type="radio" id="employmentBusinessRadio" name="quality[25]" value="4" autocomplete="off"> Business owner
+                      </label>
+                      <label class="btn btn-secondary" onclick="employmentStudent()">
+                        <input type="radio" id="employmentStudentRadio" name="quality[25]" value="1" autocomplete="off"> Student
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content" id="tab3" role="tabpanel" aria-labelledby="tab3-trigger">
+                <div class="alert alert-danger validation-alert" id="tab3ValidationAlert" role="alert" aria-live="assertive" aria-atomic="true" hidden></div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Do you own a car?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="carGroup">
+                      <label class="btn btn-secondary" onclick="carYes()">
+                        <input type="radio" id="carYesRadio" name="quality[25]" value="3" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="carNo()">
+                        <input type="radio" id="carNoRadio" name="quality[25]" value="1" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Do you own a house?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="houseGroup">
+                      <label class="btn btn-secondary" onclick="houseYes()">
+                        <input type="radio" id="houseYesRadio" name="quality[25]" value="4" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="houseNo()">
+                        <input type="radio" id="houseNoRadio" name="quality[25]" value="2" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Can you cook?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="cookGroup">
+                      <label class="btn btn-secondary" onclick="cookLevelOne()">
+                        <input type="radio" id="cookLevelOneRadio" name="quality[25]" value="0" autocomplete="off"> I can&#39;t cook
+                      </label>
+                      <label class="btn btn-secondary" onclick="cookLevelTwo()">
+                        <input type="radio" id="cookLevelTwoRadio" name="quality[25]" value="1" autocomplete="off"> I try
+                      </label>
+                      <label class="btn btn-secondary" onclick="cookLevelThree()">
+                        <input type="radio" id="cookLevelThreeRadio" name="quality[25]" value="2" autocomplete="off"> I can cook but I&#39;m lazy to
+                      </label>
+                      <label class="btn btn-secondary" onclick="cookLevelFour()">
+                        <input type="radio" id="cookLevelFourRadio" name="quality[25]" value="3" autocomplete="off"> I can cook and I love it!
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content" id="tab4" role="tabpanel" aria-labelledby="tab4-trigger">
+                <div class="alert alert-danger validation-alert" id="tab4ValidationAlert" role="alert" aria-live="assertive" aria-atomic="true" hidden></div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Rate your performance in the bedroom?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="bedroomGroup">
+                      <label class="btn btn-secondary" onclick="bedLevelOne()">
+                        <input type="radio" id="bedLevelOneRadio" name="quality[25]" value="0" autocomplete="off"> It&#39;s not my thing
+                      </label>
+                      <label class="btn btn-secondary" onclick="bedLevelTwo()">
+                        <input type="radio" id="bedLevelTwoRadio" name="quality[25]" value="1" autocomplete="off"> I can do the basics
+                      </label>
+                      <label class="btn btn-secondary" onclick="bedLevelThree()">
+                        <input type="radio" id="bedLevelThreeRadio" name="quality[25]" value="2" autocomplete="off"> I&#39;m good shame!
+                      </label>
+                      <label class="btn btn-secondary" onclick="bedLevelFour()">
+                        <input type="radio" id="bedLevelFourRadio" name="quality[25]" value="3" autocomplete="off"> I make him scream
+                      </label>
+                      <label class="btn btn-secondary" onclick="bedLevelFive()">
+                        <input type="radio" id="bedLevelFiveRadio" name="quality[25]" value="4" autocomplete="off"> I&#39;m dangerous!!! Ingozi!
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Are you a socialite? Uthanda izinto? (clubbing,shisanyamas,parties are your thing)</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="socialGroup">
+                      <label class="btn btn-secondary" onclick="socialiteYes()">
+                        <input type="radio" id="socialiteYesRadio" name="quality[25]" value="1" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="socialiteNo()">
+                        <input type="radio" id="socialiteNoRadio" name="quality[25]" value="3" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Are you from a family of royalty?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="royalGroup">
+                      <label class="btn btn-secondary" onclick="royalityYes()">
+                        <input type="radio" id="royalityYesRadio" name="quality[25]" value="15" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="royalityNo()">
+                        <input type="radio" id="royalityNoRadio" name="quality[25]" value="3" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content" id="tab5" role="tabpanel" aria-labelledby="tab5-trigger">
+                <div class="alert alert-danger validation-alert" id="tab5ValidationAlert" role="alert" aria-live="assertive" aria-atomic="true" hidden></div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Are you planning to be a housewife?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="housewiveGroup">
+                      <label class="btn btn-secondary" onclick="housewiveYes()">
+                        <input type="radio" id="housewiveYesRadio" name="quality[25]" value="1" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="housewiveNo()">
+                        <input type="radio" id="housewiveNoRadio" name="quality[25]" value="3" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Do you make more money(income) than your boyfriend?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="incomeGroup">
+                      <label class="btn btn-secondary" onclick="incomeYes()">
+                        <input type="radio" id="incomeYesRadio" name="quality[25]" value="3" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="incomeNo()">
+                        <input type="radio" id="incomeNoRadio" name="quality[25]" value="1" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Are you gonna ask for your hair money? Imali yekhanda?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="hairGroup">
+                      <label class="btn btn-secondary" onclick="hairYes()">
+                        <input type="radio" id="hairYesRadio" name="quality[25]" value="0" autocomplete="off"> Yes
+                      </label>
+                      <label class="btn btn-secondary" onclick="hairNo()">
+                        <input type="radio" id="hairNoRadio" name="quality[25]" value="2" autocomplete="off"> No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row question-row align-items-start">
+                  <div class="col-md-4 col-lg-3 question-label mb-2 mb-md-0">Do you drink?</div>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="btn-group-toggle option-group" data-toggle="buttons" id="drinkGroup">
+                      <label class="btn btn-secondary" onclick="drinkLevelOne()">
+                        <input type="radio" id="drinkLevelOneRadio" name="quality[25]" value="3" autocomplete="off"> No
+                      </label>
+                      <label class="btn btn-secondary" onclick="drinkLevelTwo()">
+                        <input type="radio" id="drinkLevelTwoRadio" name="quality[25]" value="2" autocomplete="off"> I&#39;m a light/occasional drinker
+                      </label>
+                      <label class="btn btn-secondary" onclick="drinkLevelThree()">
+                        <input type="radio" id="drinkLevelThreeRadio" name="quality[25]" value="0" autocomplete="off"> I get sloshed...Ngiyabukha!
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content finish-panel" id="tab6" role="tabpanel" aria-labelledby="tab6-trigger">
+                <button type="button" id="resultCalc" class="btn btn-success btn-lg mb-3" onclick="calculateResults()">Generate Quote!</button>
+
+                <p id="points" class="heading-font"></p>
+
+                <p id="qoute" class="heading-font"></p>
+
+                <div id="cowImages"></div>
+              </div>
             </div>
+
+            <div class="wizard-actions d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center mt-4">
+              <button type="button" id="wizardPrevious" class="btn btn-outline-secondary mb-2 mb-sm-0">Previous</button>
+              <button type="button" id="wizardNext" class="btn btn-primary">Next</button>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <a href="https://twitter.com/siyastoan" target="_blank" rel="noopener" class="btn btn-sm btn-secondary">Follow @siyastoan on Twitter</a>
+          </div>
+
+          <h6 class="mt-3 text-muted">version 2.0</h6>
         </div>
+      </section>
     </div>
-    
-<br/>
-   
-    	<div class="row">
-        <div class="col-sm-3">Are you a virgin?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="virGroup">
-                <label class="btn btn-default" onclick="virginYes()">
-                    <input type="radio" id="virginYesRadio" name="quality[25]" value="10" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="virginNo()">
-                    <input type="radio" id="virginNoRadio" name="quality[25]"  value="2" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
 
-    	<div class="row">
-        <div class="col-sm-3">How many children do you have?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="kidGroup">
-                <label class="btn btn-default" onclick="kidNone()">
-                    <input type="radio" id="kidNoneRadio" name="quality[25]"  value="2" /> None
-                </label> 
-                <label class="btn btn-default" onclick="kidOne()">
-                    <input type="radio" id="kidOneRadio" name="quality[25]" value="1" /> 1
-                </label> 
-                 <label class="btn btn-default" onclick="kidTwo()">
-                    <input type="radio" id="kidTwoRadio" name="quality[25]" value="0" /> 2
-                </label> 
-                  <label class="btn btn-default" onclick="kidThree()">
-                    <input type="radio" id="kidThreeRadio" name="quality[25]" value="0" /> 3 or more
-                </label> 
-            </div>
-        </div>
-    </div>
-</div>
-					    <div class="tab-pane" id="tab2">
-					    
-					    <div class="alert alert-danger" id="tab2ValidationAlert"></div>
-					     
-					     
-	 <div class="row">
-        <div class="col-sm-3">How many boyfriends have you had in the past?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="boyGroup">
-                <label class="btn btn-default" onclick="boyfriendLevelOne()">
-                    <input type="radio" id="boyfriendLevelOneRadio" name="quality[25]"  value="3" />0-5
-                </label> 
-                <label class="btn btn-default" onclick="boyfriendLevelTwo()">
-                    <input type="radio" id="boyfriendLevelTwoRadio" name="quality[25]" value="2" /> 6-10
-                </label> 
-                <label class="btn btn-default" onclick="boyfriendLevelThree()">
-                    <input type="radio" id="boyfriendLevelThreeRadio" name="quality[25]" value="1" /> 10-15
-                </label> 
-                <label class="btn btn-default" onclick="boyfriendLevelFour()">
-                    <input type="radio" id="boyfriendLevelFourRadio" name="quality[25]" value="0" /> 16 or more
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
+    <script src="vendor/jquery/jquery-3.5.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/bs-stepper/js/bs-stepper.min.js"></script>
+    <script src="messages.js"></script>
+    <script src="calculations.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var SELECTORS = {
+          step: '.bs-stepper-header .step',
+          stepTrigger: '.step-trigger',
+          panel: '.bs-stepper-content > .content',
+          panelContainer: '.bs-stepper-content',
+          progressBar: '.progress-bar',
+          validationAlert: '.validation-alert',
+          activeChoiceInput: 'label.active input',
+          radioInput: 'input[type="radio"]'
+        };
+        var NAVIGATION_LOCK_MS = 150;
+        var stepperEl = document.getElementById('rootwizard');
+        var previousButton = document.getElementById('wizardPrevious');
+        var nextButton = document.getElementById('wizardNext');
+        var progressBar = stepperEl.querySelector(SELECTORS.progressBar);
+        var panelContainer = stepperEl.querySelector(SELECTORS.panelContainer);
+        var stepElements = Array.prototype.slice.call(stepperEl.querySelectorAll(SELECTORS.step));
+        var stepPanels = Array.prototype.slice.call(stepperEl.querySelectorAll(SELECTORS.panel));
+        var stepTriggers = stepElements.map(function (stepEl) {
+          return stepEl.querySelector(SELECTORS.stepTrigger);
+        });
+        var totalSteps = stepElements.length;
+        var currentStepIndex = 0;
+        var navigationBusy = false;
+        var navigationLockTimer = null;
 
-    	<div class="row">
-        <div class="col-sm-3">Have you been married before?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="marriageGroup">
-                <label class="btn btn-default" onclick="marriedYes()">
-                    <input type="radio" id="marriedYesRadio" name="quality[25]" value="1" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="marriedNo()">
-                    <input type="radio" id="marriedNoRadio" name="quality[25]"  value="3" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
+        var validationRules = {
+          1: [
+            { group: '#eduGroup', message: 'Please select your highest level of education.' },
+            { group: '#virGroup', message: 'Please select if you are a virgin or not.' },
+            { group: '#kidGroup', message: 'Please select the number of children you currently have.' }
+          ],
+          2: [
+            { group: '#boyGroup', message: 'Please select the number of boyfriends you had in the past.' },
+            { group: '#marriageGroup', message: 'Please select if you have been married before.' },
+            { group: '#employmentGroup', message: 'Please select your current employment status.' }
+          ],
+          3: [
+            { group: '#carGroup', message: 'Please select if you own a car.' },
+            { group: '#houseGroup', message: 'Please select if you own a house.' },
+            { group: '#cookGroup', message: 'Please select your cooking skill level.' }
+          ],
+          4: [
+            { group: '#bedroomGroup', message: 'Please select your bedroom skill level.' },
+            { group: '#socialGroup', message: 'Please select if you are a socialite or not.' },
+            { group: '#royalGroup', message: 'Please select if you are from a royal family.' }
+          ],
+          5: [
+            { group: '#housewiveGroup', message: 'Please select if you intend to be a housewife.' },
+            { group: '#incomeGroup', message: 'Please select your income level.' },
+            { group: '#hairGroup', message: 'Please select your hair allowance.' },
+            { group: '#drinkGroup', message: 'Please select your drinking status.' }
+          ]
+        };
 
-    	<div class="row">
-        <div class="col-sm-3">What is your current employment status?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="employmentGroup">
-                <label class="btn btn-default" onclick="employmentJob()">
-                    <input type="radio" id="employmentJobRadio" name="quality[25]" value="2" /> Job
-                </label> 
-                <label class="btn btn-default" onclick="employmentCareer()">
-                    <input type="radio" id="employmentCareerRadio" name="quality[25]" value="3" /> Career driven
-                </label> 
-                 <label class="btn btn-default" onclick="employmentUnmployed()">
-                    <input type="radio" id="employmentUnmployedRadio" name="quality[25]" value="0" /> Unemployed
-                </label> 
-                 <label class="btn btn-default" onclick="employmentBusiness()">
-                    <input type="radio" id="employmentBusinessRadio" name="quality[25]" value="4" /> Business owner
-                </label> 
-                 <label class="btn btn-default" onclick="employmentStudent()">
-                    <input type="radio" id="employmentStudentRadio" name="quality[25]" value="1" /> Student
-                </label> 
-            </div>
-        </div>
-    </div>						     
-</div>
-						<div class="tab-pane" id="tab3">
-						
-						 <div class="alert alert-danger" id="tab3ValidationAlert"></div>
-							
-	<div class="row">
-        <div class="col-sm-3">Do you own a car?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="carGroup">
-                <label class="btn btn-default" onclick="carYes()">
-                    <input type="radio" id="carYesRadio" name="quality[25]" value="3" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="carNo()">
-                    <input type="radio" id="carNoRadio" name="quality[25]"  value="1" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
+        function getCurrentStepIndex() {
+          for (var i = 0; i < stepElements.length; i++) {
+            if (stepElements[i].classList.contains('active')) {
+              return i;
+            }
+          }
 
-    	<div class="row">
-        <div class="col-sm-3">Do you own a house?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="houseGroup">
-                <label class="btn btn-default" onclick="houseYes()">
-                    <input type="radio" id="houseYesRadio" name="quality[25]" value="4" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="houseNo()">
-                    <input type="radio" id="houseNoRadio" name="quality[25]"  value="2" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
+          return 0;
+        }
 
-    	<div class="row">
-        <div class="col-sm-3">Can you cook?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="cookGroup">
-                <label class="btn btn-default" onclick="cookLevelOne()">
-                    <input type="radio" id="cookLevelOneRadio" name="quality[25]" value="0" /> I can&#39;t cook
-                </label> 
-                <label class="btn btn-default" onclick="cookLevelTwo()">
-                    <input type="radio" id="cookLevelTwoRadio" name="quality[25]"  value="1" /> I try
-                </label> 
-                <label class="btn btn-default" onclick="cookLevelThree()">
-                    <input type="radio" id="cookLevelThreeRadio" name="quality[25]"  value="2" /> I can cook but I&#39;m lazy to
-                </label> 
-                <label class="btn btn-default" onclick="cookLevelFour()">
-                    <input type="radio" id="cookLevelFourRadio" name="quality[25]"  value="3" /> I can cook and I love it!
-                </label> 
-            </div>
-        </div>
-    </div>
- </div>
-						<div class="tab-pane" id="tab4">
-						
-						 <div class="alert alert-danger" id="tab4ValidationAlert"></div>
-							
-	<div class="row">
-        <div class="col-sm-3">Rate your performance in the bedroom?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="bedroomGroup">
-                <label class="btn btn-default" onclick="bedLevelOne()">
-                    <input type="radio" id="bedLevelOneRadio" name="quality[25]" value="0" /> It&#39;s not my thing
-                </label> 
-                <label class="btn btn-default" onclick="bedLevelTwo()">
-                    <input type="radio" id="bedLevelTwoRadio" name="quality[25]"  value="1" /> I can do the basics
-                </label> 
-                <label class="btn btn-default" onclick="bedLevelThree()">
-                    <input type="radio" id="bedLevelThreeRadio" name="quality[25]" value="2" /> I&#39;m good shame!
-                </label> 
-                <label class="btn btn-default" onclick="bedLevelFour()">
-                    <input type="radio" id="bedLevelFourRadio" name="quality[25]" value="3" /> I make him scream
-                </label> 
-                <label class="btn btn-default" onclick="bedLevelFive()">
-                    <input type="radio" id="bedLevelFiveRadio" name="quality[25]" value="4" /> I&#39;m dangerous!!! Ingozi!
-                </label>
-            </div>
-        </div>
-    </div>
-    
-<br/>
+        function getProgressPercent(stepIndex) {
+          return Math.round(((stepIndex + 1) / totalSteps) * 100);
+        }
 
-   
-    	<div class="row">
-        <div class="col-sm-3">Are you a socialite? Uthanda izinto? (clubbing,shisanyamas,parties are your thing)</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="socialGroup">
-                <label class="btn btn-default" onclick="socialiteYes()">
-                    <input type="radio" id="socialiteYesRadio" name="quality[25]" value="1" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="socialiteNo()">
-                    <input type="radio" id="socialiteNoRadio" name="quality[25]"  value="3" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
+        function getAlert(stepNumber) {
+          var panel = stepPanels[stepNumber - 1];
 
-    	<div class="row">
-        <div class="col-sm-3">Are you from a family of royalty?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="royalGroup">
-                <label class="btn btn-default" onclick="royalityYes()">
-                    <input type="radio" id="royalityYesRadio" name="quality[25]" value="15" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="royalityNo()">
-                    <input type="radio" id="royalityNoRadio" name="quality[25]" value="3" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-</div>
-						<div class="tab-pane" id="tab5">
-						
-						 <div class="alert alert-danger" id="tab5ValidationAlert"></div>
-							
-	<div class="row">
-        <div class="col-sm-3">Are you planning to be a housewife?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="housewiveGroup">
-                <label class="btn btn-default" onclick="housewiveYes()">
-                    <input type="radio" id="housewiveYesRadio" name="quality[25]" value="1" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="housewiveNo()">
-                    <input type="radio" id="housewiveNoRadio" name="quality[25]"  value="3" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
+          return panel ? panel.querySelector(SELECTORS.validationAlert) : null;
+        }
 
-    	 <div class="row">
-        <div class="col-sm-3">Do you make more money(income) than your boyfriend?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="incomeGroup">
-                <label class="btn btn-default" onclick="incomeYes()">
-                    <input type="radio" id="incomeYesRadio" name="quality[25]" value="3" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="incomeNo()">
-                    <input type="radio" id="incomeNoRadio" name="quality[25]"  value="1" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
+        function setValidationAlert(stepNumber, message) {
+          var alertEl = getAlert(stepNumber);
 
-    	<div class="row">
-        <div class="col-sm-3">Are you gonna ask for your hair money? Imali yekhanda?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="hairGroup">
-                <label class="btn btn-default" onclick="hairYes()">
-                    <input type="radio" id="hairYesRadio" name="quality[25]" value="0" /> Yes
-                </label> 
-                <label class="btn btn-default" onclick="hairNo()">
-                    <input type="radio" id="hairNoRadio" name="quality[25]"  value="2" /> No
-                </label> 
-            </div>
-        </div>
-    </div>
-    
-<br/>
+          if (!alertEl) {
+            return;
+          }
 
-    	<div class="row">
-        <div class="col-sm-3">Do you drink?</div>
-        <div class="col-sm-9">
-            <div class="btn-group" data-toggle="buttons" id="drinkGroup">
-                <label class="btn btn-default" onclick="drinkLevelOne()">
-                    <input type="radio" id="drinkLevelOneRadio" name="quality[25]" value="3" /> No
-                </label> 
-                <label class="btn btn-default" onclick="drinkLevelTwo()">
-                    <input type="radio" id="drinkLevelTwoRadio" name="quality[25]"  value="2" /> I&#39;m a light/occasional drinker 
-                </label> 
-                  <label class="btn btn-default" onclick="drinkLevelThree()">
-                    <input type="radio" id="drinkLevelThreeRadio" name="quality[25]"  value="0" /> I get sloshed...Ngiyabukha! 
-                </label> 
-            </div>
-        </div>
-    </div>
-							
-</div>
+          if (message) {
+            alertEl.innerHTML = message;
+            alertEl.hidden = false;
+            return;
+          }
 
-				  <div class="tab-pane" id="tab6">
-							
-				  <button type="button" id="resultCalc" class="btn btn-success" onclick="calculateResults()">Generate Quote!</button>	
-				  
-				  <p id="points" style="font-family: 'Righteous', cursive;"></p>
-				    
-				  <p id="qoute" style="font-family: 'Righteous', cursive;"></p>
-				  
-				 
+          alertEl.innerHTML = '';
+          alertEl.hidden = true;
+        }
 
-				  <div id="cowImages">  </div>
-				  
-				  </div>
-				  
+        function getSelectedGroupInput(groupSelector) {
+          return document.querySelector(groupSelector + ' ' + SELECTORS.activeChoiceInput);
+        }
 
-					    
-						<ul class="pager wizard">
-							<li class="previous first" style="display:none;"><a href="#">First</a></li>
-							<li class="previous"><a href="#">Previous</a></li>
-							<li class="next last" style="display:none;"><a href="#">Last</a></li>
-						  	<li class="next"><a href="#">Next</a></li>
-						</ul>
-					</div>
-				</div>
-				
-<div> 
-<a href="https://twitter.com/siyastoan" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @siyastoan</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-</div>
+        function getFirstMissingRule(stepNumber) {
+          var rules = validationRules[stepNumber] || [];
 
-<h6>version 1.2</h6>
+          for (var i = 0; i < rules.length; i++) {
+            if (!getSelectedGroupInput(rules[i].group)) {
+              return rules[i];
+            }
+          }
 
+          return null;
+        }
 
-			</section>
-	</div>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-	<script src="jquery.bootstrap.wizard.js"></script>
-	<script src="prettify.js"></script>
-	<script src="messages.js"></script>
-	<script src="calculations.js"></script>
-	<script>
-	$(document).ready(function() {
-	  	$('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
-			var $total = navigation.find('li').length;
-			var $current = index+1;
-			var $percent = ($current/$total) * 100;
-			$('#rootwizard .progress-bar').css({width:$percent+'%'});
-			
-		},
-		onTabClick: function(tab, navigation, index) {
-		return false; },
-		
-		onNext: function(tab, navigation, index) {
-		
-		if(index==1) {
-		
-		if(!$('#eduGroup label.active input').val()){
-		$("#tab1ValidationAlert").html("Please select your highest level of education.");
-		return false;
-		}
-		
-		if(!$('#virGroup label.active input').val()){
-		$("#tab1ValidationAlert").html("Please select if you are a virgin or not.");
-		return false;
-		}
-		
-		if(!$('#kidGroup label.active input').val()){
-		$("#tab1ValidationAlert").html("Please select the number of children you currently have.");
-		return false;
-		}
-		
-		}
-		
-		if(index==2) {
-		
-		if(!$('#boyGroup label.active input').val()){
-		$("#tab2ValidationAlert").html("Please select the number of boyfriends you had in the past.");
-		return false;
-		}
-		
-		if(!$('#marriageGroup label.active input').val()){
-		$("#tab2ValidationAlert").html("Please select if you have been married before.");
-		return false;
-		}
-		
-		if(!$('#employmentGroup label.active input').val()){
-		$("#tab2ValidationAlert").html("Please select your current employment status.");
-		return false;
-		}
-		
-		}
-		
-		
-		if(index==3) {
-		
-		if(!$('#carGroup label.active input').val()){
-		$("#tab3ValidationAlert").html("Please select if you own a car.");
-		return false;
-		}
-		
-		if(!$('#houseGroup label.active input').val()){
-		$("#tab3ValidationAlert").html("Please select if you own a house.");
-		return false;
-		}
-		
-		if(!$('#cookGroup label.active input').val()){
-		$("#tab3ValidationAlert").html("Please select your cooking skill level.");
-		return false;
-		}
-		
-		}
-		
-		
-		if(index==4) {
-		
-		if(!$('#bedroomGroup label.active input').val()){
-		$("#tab4ValidationAlert").html("Please select your bedroom skill level.");
-		return false;
-		}
-		
-		if(!$('#socialGroup label.active input').val()){
-		$("#tab4ValidationAlert").html("Please select if you are a socialite or not.");
-		return false;
-		}
-		
-		if(!$('#royalGroup label.active input').val()){
-		$("#tab4ValidationAlert").html("Please select if you are from a royal family.");
-		return false;
-		}
-		
-		}
-		
-		
-		
-		if(index==5) {
-		
-		if(!$('#housewiveGroup label.active input').val()){
-		$("#tab5ValidationAlert").html("Please select if you intend to be a housewife.");
-		return false;
-		}
-		
-		if(!$('#incomeGroup label.active input').val()){
-		$("#tab5ValidationAlert").html("Please select your income level.");
-		return false;
-		}
-		
-		if(!$('#hairGroup label.active input').val()){
-		$("#tab5ValidationAlert").html("Please select your hair allowance.");
-		return false;
-		}
-		
-		if(!$('#drinkGroup label.active input').val()){
-		$("#tab5ValidationAlert").html("Please select your drinking status");
-		return false;
-		}
-		
-		}
-		
-		
-		}
-		});
-		
-		window.prettyPrint && prettyPrint()
-		
-	});
-	</script>
-	
+        function validateStep(stepNumber) {
+          var missingRule = getFirstMissingRule(stepNumber);
+
+          if (missingRule) {
+            setValidationAlert(stepNumber, missingRule.message);
+            return false;
+          }
+
+          setValidationAlert(stepNumber, '');
+          return true;
+        }
+
+        function refreshValidationAlert(stepNumber) {
+          var alertEl = getAlert(stepNumber);
+          var missingRule;
+
+          if (!alertEl || alertEl.hidden) {
+            return;
+          }
+
+          missingRule = getFirstMissingRule(stepNumber);
+
+          if (missingRule) {
+            setValidationAlert(stepNumber, missingRule.message);
+            return;
+          }
+
+          setValidationAlert(stepNumber, '');
+        }
+
+        function syncProgress(stepIndex) {
+          var percent = getProgressPercent(stepIndex);
+
+          progressBar.style.width = percent + '%';
+          progressBar.setAttribute('aria-valuenow', String(percent));
+          progressBar.setAttribute('aria-valuetext', percent + '% complete');
+          progressBar.textContent = percent + '%';
+        }
+
+        function syncStepAccessibility(stepIndex) {
+          stepTriggers.forEach(function (trigger, index) {
+            if (!trigger) {
+              return;
+            }
+
+            if (index === stepIndex) {
+              trigger.setAttribute('aria-current', 'step');
+              return;
+            }
+
+            trigger.removeAttribute('aria-current');
+          });
+        }
+
+        function syncNavigation(stepIndex) {
+          var isFirstStep = stepIndex === 0;
+          var isLastStep = stepIndex === totalSteps - 1;
+
+          previousButton.disabled = navigationBusy || isFirstStep;
+          previousButton.setAttribute('aria-disabled', String(previousButton.disabled));
+          previousButton.classList.toggle('invisible', isFirstStep);
+          nextButton.disabled = navigationBusy || isLastStep;
+          nextButton.hidden = isLastStep;
+          nextButton.setAttribute('aria-disabled', String(nextButton.disabled));
+        }
+
+        function syncUi(stepIndex) {
+          currentStepIndex = stepIndex;
+          syncProgress(stepIndex);
+          syncStepAccessibility(stepIndex);
+          syncNavigation(stepIndex);
+        }
+
+        function releaseNavigationLock() {
+          navigationBusy = false;
+
+          if (navigationLockTimer) {
+            window.clearTimeout(navigationLockTimer);
+            navigationLockTimer = null;
+          }
+
+          syncNavigation(currentStepIndex);
+        }
+
+        function requestStepChange(direction) {
+          if (navigationBusy) {
+            return;
+          }
+
+          if ((direction === 'previous' && currentStepIndex === 0) ||
+              (direction === 'next' && currentStepIndex === totalSteps - 1)) {
+            return;
+          }
+
+          navigationBusy = true;
+          syncNavigation(currentStepIndex);
+          navigationLockTimer = window.setTimeout(function () {
+            releaseNavigationLock();
+          }, NAVIGATION_LOCK_MS);
+          stepper[direction]();
+        }
+
+        var stepper = new Stepper(stepperEl, {
+          linear: true,
+          animation: false
+        });
+
+        stepperEl.addEventListener('show.bs-stepper', function (event) {
+          if (event.detail.to > event.detail.from && !validateStep(event.detail.from + 1)) {
+            event.preventDefault();
+            releaseNavigationLock();
+          }
+        });
+
+        stepperEl.addEventListener('shown.bs-stepper', function (event) {
+          releaseNavigationLock();
+          syncUi(event.detail.indexStep);
+        });
+
+        panelContainer.addEventListener('change', function (event) {
+          var panel;
+          var stepNumber;
+
+          if (!event.target || !event.target.matches(SELECTORS.radioInput)) {
+            return;
+          }
+
+          panel = event.target.closest('.content');
+
+          if (!panel) {
+            return;
+          }
+
+          stepNumber = stepPanels.indexOf(panel) + 1;
+
+          if (stepNumber > 0) {
+            refreshValidationAlert(stepNumber);
+          }
+        });
+
+        previousButton.addEventListener('click', function () {
+          requestStepChange('previous');
+        });
+
+        nextButton.addEventListener('click', function () {
+          requestStepChange('next');
+        });
+
+        syncUi(getCurrentStepIndex());
+      });
+    </script>
   </body>
 </html>
