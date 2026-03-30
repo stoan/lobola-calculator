@@ -432,6 +432,34 @@
                       <div id="cowImages"></div>
                     </div>
                   </div>
+
+                  <div class="feedback-stage" aria-labelledby="feedbackTitle">
+                    <div class="feedback-copy">
+                      <p class="feedback-kicker">Audience Check</p>
+                      <h3 class="feedback-title heading-font" id="feedbackTitle">Was this calculation fair?</h3>
+                      <p class="feedback-text">Pick a side, then leave an optional short note for the next round of improvements.</p>
+                    </div>
+
+                    <div class="feedback-toggle" role="group" aria-label="Was this calculation fair?">
+                      <button type="button" class="btn feedback-choice" data-feedback-vote="yes" aria-pressed="false">👍 Yes</button>
+                      <button type="button" class="btn feedback-choice" data-feedback-vote="no" aria-pressed="false">👎 No</button>
+                    </div>
+
+                    <div class="feedback-comment-shell" id="feedbackCommentShell" hidden>
+                      <p class="feedback-comment-title">Tell us why</p>
+                      <p class="feedback-comment-help" id="feedbackCommentHelp">Keep it under 500 characters.</p>
+
+                      <div class="cusdis-shell" id="cusdisShell">
+                        <div id="cusdisPlaceholder" class="cusdis-placeholder">Choose 👍 Yes or 👎 No to open the optional comment box.</div>
+                        <div
+                          id="cusdis_thread"
+                          class="cusdis-thread"
+                          hidden
+                          aria-label="Fairness comments"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -457,6 +485,12 @@
     <script src="messages.js"></script>
     <script src="calculations.js"></script>
     <script>
+      window.LOBOLA_CONFIG = Object.assign({
+        cusdisHost: 'https://cusdis.com',
+        cusdisAppId: '6cfe4d2d-8091-42f1-87fd-3a9787a2a8d8'
+      }, window.LOBOLA_CONFIG || {});
+    </script>
+    <script>
       document.addEventListener('DOMContentLoaded', function () {
         var SELECTORS = {
           step: '.bs-stepper-header .step',
@@ -468,6 +502,7 @@
           activeChoiceInput: 'label.active input',
           radioInput: 'input[type="radio"]'
         };
+        var AUTO_ADVANCE_DELAY_MS = 320;
         var NAVIGATION_LOCK_MS = 150;
         var stepperEl = document.getElementById('rootwizard');
         var previousButton = document.getElementById('wizardPrevious');
@@ -484,6 +519,11 @@
         var finishPanel = document.getElementById('tab6');
         var resultButton = document.getElementById('resultCalc');
         var resultStageEl = finishPanel ? finishPanel.querySelector('.result-stage') : null;
+        var feedbackCommentShell = document.getElementById('feedbackCommentShell');
+        var feedbackCommentHelp = document.getElementById('feedbackCommentHelp');
+        var feedbackButtons = finishPanel ? Array.prototype.slice.call(finishPanel.querySelectorAll('[data-feedback-vote]')) : [];
+        var cusdisThreadEl = document.getElementById('cusdis_thread');
+        var cusdisPlaceholderEl = document.getElementById('cusdisPlaceholder');
         var pointsEl = document.getElementById('points');
         var quoteEl = document.getElementById('qoute');
         var cowImagesEl = document.getElementById('cowImages');
@@ -492,10 +532,19 @@
         var stageTitleEl = document.getElementById('stageTitle');
         var stageDescriptionEl = document.getElementById('stageDescription');
         var stagePercentEl = document.getElementById('stagePercent');
+        var cusdisConfig = {
+          host: (window.LOBOLA_CONFIG && window.LOBOLA_CONFIG.cusdisHost) || 'https://cusdis.com',
+          appId: window.LOBOLA_CONFIG && window.LOBOLA_CONFIG.cusdisAppId ? String(window.LOBOLA_CONFIG.cusdisAppId).trim() : ''
+        };
         var totalSteps = stepElements.length;
         var currentStepIndex = 0;
         var navigationBusy = false;
         var navigationLockTimer = null;
+        var autoAdvanceTimer = null;
+        var autoAdvanceStepNumber = null;
+        var selectedFeedbackVote = '';
+        var cusdisRequested = false;
+        var cusdisReady = false;
         var STAGE_META = [
           {
             eyebrow: 'Round 1 of 6',
@@ -610,12 +659,63 @@
           return document.querySelector(groupSelector + ' ' + SELECTORS.activeChoiceInput);
         }
 
-        function getFirstMissingRule(stepNumber) {
-          var rules = validationRules[stepNumber] || [];
+        function getRequiredGroups(stepNumber) {
+          var panel = stepPanels[stepNumber - 1];
 
-          for (var i = 0; i < rules.length; i++) {
-            if (!getSelectedGroupInput(rules[i].group)) {
-              return rules[i];
+          if (!panel) {
+            return [];
+          }
+
+          return Array.prototype.slice.call(panel.querySelectorAll('.option-group[id]')).map(function (groupEl) {
+            return '#' + groupEl.id;
+          });
+        }
+
+        function isGroupAnswered(groupSelector) {
+          return !!getSelectedGroupInput(groupSelector);
+        }
+
+        function isStepComplete(stepNumber) {
+          var requiredGroups = getRequiredGroups(stepNumber);
+
+          if (!requiredGroups.length) {
+            return false;
+          }
+
+          return requiredGroups.every(isGroupAnswered);
+        }
+
+        function buildMissingMessage(stepNumber, groupSelector) {
+          var rules = validationRules[stepNumber] || [];
+          var matchingRule = rules.find(function (rule) {
+            return rule.group === groupSelector;
+          });
+          var groupEl;
+          var questionLabel;
+
+          if (matchingRule) {
+            return matchingRule.message;
+          }
+
+          groupEl = document.querySelector(groupSelector);
+          questionLabel = groupEl ? groupEl.closest('.question-row').querySelector('.question-label') : null;
+
+          return questionLabel ? 'Please answer: ' + questionLabel.textContent.trim() : 'Please complete this step.';
+        }
+
+        function getFirstMissingRule(stepNumber) {
+          var requiredGroups = getRequiredGroups(stepNumber);
+          var groupSelector;
+          var i;
+
+          for (i = 0; i < requiredGroups.length; i++) {
+            groupSelector = requiredGroups[i];
+
+            if (!isGroupAnswered(groupSelector)) {
+              return {
+                group: groupSelector,
+                message: buildMissingMessage(stepNumber, groupSelector)
+              };
             }
           }
 
@@ -650,6 +750,38 @@
           }
 
           setValidationAlert(stepNumber, '');
+        }
+
+        function clearAutoAdvance() {
+          if (autoAdvanceTimer) {
+            window.clearTimeout(autoAdvanceTimer);
+            autoAdvanceTimer = null;
+          }
+
+          autoAdvanceStepNumber = null;
+          stepperEl.classList.remove('is-auto-advancing');
+          stepperEl.removeAttribute('data-auto-advance-step');
+        }
+
+        function scheduleAutoAdvance(stepNumber) {
+          clearAutoAdvance();
+
+          if (stepNumber >= totalSteps || currentStepIndex !== stepNumber - 1 || navigationBusy || !isStepComplete(stepNumber)) {
+            return;
+          }
+
+          autoAdvanceStepNumber = stepNumber;
+          stepperEl.classList.add('is-auto-advancing');
+          stepperEl.setAttribute('data-auto-advance-step', String(stepNumber));
+          autoAdvanceTimer = window.setTimeout(function () {
+            if (navigationBusy || autoAdvanceStepNumber !== stepNumber || currentStepIndex !== stepNumber - 1 || !isStepComplete(stepNumber)) {
+              clearAutoAdvance();
+              return;
+            }
+
+            clearAutoAdvance();
+            requestStepChange('next');
+          }, AUTO_ADVANCE_DELAY_MS);
         }
 
         function syncProgress(stepIndex) {
@@ -784,6 +916,8 @@
         }
 
         function requestStepChange(direction) {
+          clearAutoAdvance();
+
           if (navigationBusy) {
             return;
           }
@@ -837,6 +971,15 @@
           if (stepNumber > 0) {
             replayAnimation(event.target.closest('label.btn'), 'choice-lock');
             refreshValidationAlert(stepNumber);
+
+            if (stepNumber < totalSteps && stepNumber === currentStepIndex + 1) {
+              if (isStepComplete(stepNumber)) {
+                scheduleAutoAdvance(stepNumber);
+                return;
+              }
+
+              clearAutoAdvance();
+            }
           }
         });
 
@@ -846,6 +989,124 @@
 
         nextButton.addEventListener('click', function () {
           requestStepChange('next');
+        });
+
+        function updateFeedbackSelection(vote) {
+          selectedFeedbackVote = vote;
+
+          feedbackButtons.forEach(function (button) {
+            var isSelected = button.getAttribute('data-feedback-vote') === vote;
+
+            button.classList.toggle('is-selected', isSelected);
+            button.setAttribute('aria-pressed', String(isSelected));
+          });
+
+          if (finishPanel) {
+            finishPanel.classList.add('feedback-engaged');
+            finishPanel.setAttribute('data-feedback-selection', vote);
+          }
+
+          if (feedbackCommentShell) {
+            feedbackCommentShell.hidden = false;
+          }
+
+          if (feedbackCommentHelp) {
+            feedbackCommentHelp.textContent = vote === 'yes'
+              ? 'Keep it under 500 characters. Tell us what felt right.'
+              : 'Keep it under 500 characters. Tell us what felt off.';
+          }
+        }
+
+        function setCusdisPlaceholder(message, tone) {
+          if (!cusdisPlaceholderEl) {
+            return;
+          }
+
+          cusdisPlaceholderEl.textContent = message;
+          cusdisPlaceholderEl.hidden = false;
+          cusdisPlaceholderEl.setAttribute('data-tone', tone || 'default');
+        }
+
+        function getCusdisPagePath() {
+          var pathname = window.location.pathname.replace(/\/+$/, '');
+          return pathname || '/';
+        }
+
+        function markCusdisReady() {
+          cusdisReady = true;
+
+          if (cusdisThreadEl) {
+            cusdisThreadEl.hidden = false;
+            cusdisThreadEl.setAttribute('data-cusdis-ready', 'true');
+          }
+
+          if (cusdisPlaceholderEl) {
+            cusdisPlaceholderEl.hidden = true;
+          }
+        }
+
+        function ensureCusdisEmbed() {
+          var scriptEl;
+
+          if (!cusdisThreadEl) {
+            return;
+          }
+
+          if (!cusdisConfig.appId) {
+            setCusdisPlaceholder('Comments are optional. Add window.LOBOLA_CONFIG.cusdisAppId in index.html to enable Cusdis here.', 'warning');
+            return;
+          }
+
+          cusdisThreadEl.dataset.host = cusdisConfig.host;
+          cusdisThreadEl.dataset.appId = cusdisConfig.appId;
+          cusdisThreadEl.dataset.pageId = 'lobola-calculator-fairness:' + getCusdisPagePath();
+          cusdisThreadEl.dataset.pageUrl = window.location.href.split('#')[0];
+          cusdisThreadEl.dataset.pageTitle = document.title + ' fairness feedback';
+          cusdisThreadEl.dataset.theme = 'dark';
+
+          if (cusdisReady && window.CUSDIS && window.CUSDIS.renderTo) {
+            return;
+          }
+
+          if (window.CUSDIS && window.CUSDIS.renderTo) {
+            window.CUSDIS.renderTo(cusdisThreadEl);
+            markCusdisReady();
+            return;
+          }
+
+          if (cusdisRequested) {
+            setCusdisPlaceholder('Loading the comment box…', 'default');
+            return;
+          }
+
+          cusdisRequested = true;
+          setCusdisPlaceholder('Loading the comment box…', 'default');
+          scriptEl = document.createElement('script');
+          scriptEl.async = true;
+          scriptEl.defer = true;
+          scriptEl.src = cusdisConfig.host.replace(/\/+$/, '') + '/js/cusdis.es.js';
+          scriptEl.onload = function () {
+            if (window.CUSDIS && window.CUSDIS.renderTo) {
+              window.CUSDIS.renderTo(cusdisThreadEl);
+              markCusdisReady();
+              return;
+            }
+
+            cusdisRequested = false;
+            setCusdisPlaceholder('Cusdis loaded, but the comment box could not be mounted.', 'warning');
+          };
+          scriptEl.onerror = function () {
+            cusdisRequested = false;
+            setCusdisPlaceholder('Cusdis could not be loaded. Check the configured host and app ID.', 'warning');
+          };
+          document.body.appendChild(scriptEl);
+        }
+
+        feedbackButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            updateFeedbackSelection(button.getAttribute('data-feedback-vote'));
+            ensureCusdisEmbed();
+          });
         });
 
         if (window.MutationObserver && messageInfoDialog) {
@@ -859,6 +1120,7 @@
         }
 
         document.addEventListener('lobola:result-reveal-start', function () {
+          clearAutoAdvance();
           resetResultRevealState();
         });
 
