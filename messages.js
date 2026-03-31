@@ -37,7 +37,7 @@ function marriedNo()  { setMessage("Let's hope your boyfriend can afford this lo
 // --- Employment ---
 function employmentJob()       { setMessage("We all started there...phusha phanta"); }
 function employmentCareer()    { setMessage("Nice! Keep it up"); }
-function employmentUnmployed() { setMessage("Hmmmmmmmmm...keep trying!"); }
+function employmentUnemployed() { setMessage("Hmmmmmmmmm...keep trying!"); }
 function employmentBusiness()  { setMessage("Keep it up hustler, we need more people like you"); }
 function employmentStudent()   { setMessage("What's the rush? Focus on your studies"); }
 
@@ -67,12 +67,12 @@ function socialiteYes() { setMessage("Ehlisa phela, usuzoba umama wasekhaya...kh
 function socialiteNo()  { setMessage("A step in the right direction...you can still go out with your hubby"); }
 
 // --- Royalty ---
-function royalityYes() { setMessage("Ngempela?"); }
-function royalityNo()  { setMessage("Like the rest of us :-)"); }
+function royaltyYes() { setMessage("Ngempela?"); }
+function royaltyNo()  { setMessage("Like the rest of us :-)"); }
 
 // --- Housewife ---
-function housewiveYes() { setMessage("Yeka ukuvilapha oe!"); }
-function housewiveNo()  { setMessage("Nothing is more attractive than a hustler...Professional hustling you know what I mean"); }
+function housewifeYes() { setMessage("Yeka ukuvilapha oe!"); }
+function housewifeNo()  { setMessage("Nothing is more attractive than a hustler...Professional hustling you know what I mean"); }
 
 // --- Income ---
 function incomeYes() { setMessage("Yey! Please be humble...I'm sure he feels the pressure already"); }

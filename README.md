@@ -23,9 +23,9 @@ The UI migration intentionally stopped at Bootstrap 4.x. Do not mix old Bootstra
 
 - answer groups keep their existing IDs such as `#eduGroup`
 - scoring reads the active choice through `label.active input`
-- some radio inputs still share the original `name` values
+- the quiz flow now binds answer messaging through centralized JavaScript instead of inline `onclick` handlers
 
-That behavior is intentionally preserved to avoid changing questionnaire flow, scoring, and generated results. If you ever refactor the answer markup, update all dependent selectors safely before changing this contract.
+The scoring contract above is intentionally preserved to avoid changing questionnaire flow, scoring, and generated results. Radio inputs now use per-question `name` values, but `calculations.js` still reads the active selection from the label state rather than from the radio group names. If you ever refactor the answer markup, update all dependent selectors safely before changing this contract.
 
 ## Quiz Flow Notes
 
@@ -62,7 +62,7 @@ The current UI now behaves like a dramatic one-question-at-a-time quiz show whil
 
 Motion still respects `prefers-reduced-motion`, which disables non-essential animation and hover movement while keeping every state change readable and usable.
 
-Important compatibility note: this redesign does not change questionnaire logic. The app still intentionally preserves the `label.active input` scoring contract, the existing answer group IDs, shared radio naming, and the inline answer handlers because `calculations.js` and `messages.js` still depend on those hooks.
+Important compatibility note: this redesign does not change questionnaire logic. The app still intentionally preserves the `label.active input` scoring contract and the existing answer group IDs because `calculations.js` and `messages.js` still depend on those hooks.
 
 ## Result Range Notes
 
@@ -78,7 +78,7 @@ Legacy contracts intentionally preserved:
 
 - `label.active input` remains the scoring selector contract
 - answer group IDs such as `#eduGroup` remain stable
-- the existing questions, answers, flow, and inline answer handlers remain in place
+- the existing questions, answers, flow, and reveal behavior remain in place
 
 ## Fairness Feedback Notes
 
@@ -107,3 +107,19 @@ Sources used for that limitation check:
 
 - [Cusdis JS SDK attributes](https://github.com/djyde/cusdis/blob/master/public/doc/advanced/sdk.md)
 - [Cusdis reply form source](https://github.com/djyde/cusdis/blob/master/widget/components/Reply.svelte)
+
+## Cleanup Notes
+
+This cleanup pass reduced leftover migration debt without changing the quiz behavior:
+
+- renamed wrapper classes and IDs away from stepper-era names such as `wizard-stepper` and `wizardNext`
+- removed dormant stepper-only CSS selectors that no longer match the one-question quiz flow
+- replaced inline answer/reveal handlers with centralized JavaScript listeners
+- normalized radio `name` attributes to per-question values while keeping the `label.active input` scoring contract intact
+- corrected the legacy `qoute` result hook to `quote`
+
+Intentional debt still left alone:
+
+- panel IDs like `tab1` through `tab6` still exist because they are harmless internal hooks
+- `label.active input` remains the compatibility-sensitive scoring selector
+- answer group IDs such as `#eduGroup` remain stable to avoid changing `calculations.js`

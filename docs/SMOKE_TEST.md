@@ -66,5 +66,7 @@ Use a mobile width around `390px`.
 - Auto-advance should only trigger after the current visible question is answered.
 - Do not change the `label.active input` scoring selector contract unless all dependent logic is updated safely.
 - Do not rename the answer group IDs without updating every selector in the existing JS.
+- Do not reintroduce shared radio `name` values or inline answer handlers without re-checking the quiz state and message wiring end-to-end.
 - Do not change questionnaire flow or the underlying answer values when adjusting the displayed Rand remap.
+- The final reveal quote hook is `#quote`; keep that selector aligned with both the result markup and `calculations.js`.
 - The 500-character comment guidance is best-effort only unless Cusdis adds an officially supported `maxlength` option.
