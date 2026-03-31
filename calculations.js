@@ -4,7 +4,7 @@ const RESULT_GROUPS = [
   '#eduGroup', '#virGroup', '#kidGroup', '#boyGroup',
   '#marriageGroup', '#employmentGroup', '#carGroup', '#houseGroup',
   '#cookGroup', '#bedroomGroup', '#socialGroup', '#royalGroup',
-  '#housewiveGroup', '#incomeGroup', '#hairGroup', '#drinkGroup'
+  '#housewifeGroup', '#incomeGroup', '#hairGroup', '#drinkGroup'
 ];
 
 const RAW_SCORE_MIN = 12;
@@ -104,7 +104,7 @@ function calculateResults() {
 
   showCowImages(cowCount, formattedRand);
 
-  document.getElementById('qoute').innerHTML =
+  document.getElementById('quote').innerHTML =
     'Please inform your boyfriend to start budgeting ' + formattedRand +
     ' if he wants to put a ring on that finger.';
 
