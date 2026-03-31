@@ -12,11 +12,10 @@ https://en.wikipedia.org/wiki/Lobolo
 The site is a static HTML/CSS/JS app and now depends on:
 
 - local Bootstrap 4.6.2 assets in `bootstrap/`
-- local `bs-stepper` 1.7.0 assets in `vendor/bs-stepper/`
 - local jQuery 3.5.1 in `vendor/jquery/`
 - local show fonts in `vendor/fonts/`
 
-The wizard migration intentionally stopped at Bootstrap 4.x. Do not mix old Bootstrap 3 assets/classes back into the page.
+The UI migration intentionally stopped at Bootstrap 4.x. Do not mix old Bootstrap 3 assets/classes back into the page.
 
 ## Compatibility Notes
 
@@ -28,12 +27,12 @@ The wizard migration intentionally stopped at Bootstrap 4.x. Do not mix old Boot
 
 That behavior is intentionally preserved to avoid changing questionnaire flow, scoring, and generated results. If you ever refactor the answer markup, update all dependent selectors safely before changing this contract.
 
-## Step Behavior Notes
+## Quiz Flow Notes
 
-- each question step now auto-advances once every required answer group in the current step has a selected option
-- the auto-advance delay is `320ms` so the move feels intentional instead of abrupt
-- the `Next` button still remains available as a manual fallback
-- existing validation rules still block incomplete manual `Next` attempts
+- the app now runs as a one-question-at-a-time quiz flow instead of a visible multi-stepper form
+- the normal path is: show one question, select an answer, lock it in, then auto-advance after `380ms`
+- `Previous Question` remains available for lightweight back-navigation
+- `Continue` only appears when revisiting a question that already has a locked answer, so the flow never dead-ends after going back
 
 ## Run Locally
 
@@ -53,13 +52,13 @@ A lightweight manual smoke checklist lives in [docs/SMOKE_TEST.md](docs/SMOKE_TE
 
 ## Game-Show UI Notes
 
-The current UI is a presentation-only redesign inspired by a dramatic prime-time quiz show atmosphere while keeping the app static and lightweight:
+The current UI now behaves like a dramatic one-question-at-a-time quiz show while keeping the app static and lightweight:
 
 - a dark stage backdrop with spotlight gradients and marquee accents around the main card
-- a stronger round banner and step rail so the flow feels like advancing through televised rounds
+- a non-clickable round track and live question counter instead of a visible stepper form
 - larger answer buttons styled like “final answer” choices with a more obvious locked-in state
 - a more cinematic reveal board for the final amount, cow meter, quote, and fairness feedback section
-- short CSS-first motion for panel entry, answer lock-in, progress emphasis, and the final reveal moment
+- short CSS-first motion for question entry, answer lock-in, progress emphasis, and the final reveal moment
 
 Motion still respects `prefers-reduced-motion`, which disables non-essential animation and hover movement while keeping every state change readable and usable.
 

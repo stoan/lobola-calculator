@@ -7,7 +7,6 @@
     <title>Lobola Calculator</title>
 
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/bs-stepper/css/bs-stepper.min.css" rel="stylesheet">
     <link href="vendor/fonts/fonts.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
@@ -20,7 +19,7 @@
           <div class="hero-intro pb-3 mb-4 border-bottom">
             <div class="show-broadcast" aria-hidden="true">
               <span class="broadcast-pill">Quiz Show Edition</span>
-              <span class="broadcast-copy">5 rounds plus the final reveal</span>
+              <span class="broadcast-copy">16 questions plus the final reveal</span>
             </div>
 
             <h1 class="heading-font" id="wizardTitle">Lobola Calculator</h1>
@@ -42,83 +41,67 @@
             </div>
           </div>
 
-          <div id="rootwizard" class="bs-stepper wizard-stepper">
+          <div id="rootwizard" class="quiz-flow wizard-stepper">
             <div class="show-banner" aria-live="polite" aria-atomic="true">
               <div class="show-banner-copy">
-                <p class="show-stage-pill" id="stageEyebrow">Round 1 of 6</p>
+                <p class="show-stage-pill" id="stageEyebrow">Round 1 of 5</p>
                 <h2 class="show-stage-title heading-font" id="stageTitle">Opening Round</h2>
-                <p class="show-stage-copy" id="stageDescription">Start strong, lock in every answer, and keep the momentum going.</p>
+                <p class="show-stage-copy" id="stageDescription">Answer one question at a time and lock each choice in like a final answer.</p>
+                <p class="show-question-status" id="questionStatus">Question 1 of 16</p>
               </div>
               <div class="show-progress-chip" aria-hidden="true">
-                <span class="show-progress-label">Show progress</span>
-                <strong id="stagePercent">17%</strong>
+                <span class="show-progress-label">Question progress</span>
+                <strong id="stagePercent">0%</strong>
               </div>
             </div>
 
-            <div class="bs-stepper-header" role="tablist" aria-orientation="horizontal">
-              <div class="step" data-target="#tab1">
-                <button type="button" class="step-trigger" role="tab" aria-controls="tab1" id="tab1-trigger">
-                  <span class="bs-stepper-circle">1</span>
-                  <span class="bs-stepper-label">
-                    <span class="step-kicker">Round 1</span>
-                    <span class="step-title">Basics</span>
-                  </span>
-                </button>
+            <div class="quiz-round-track" aria-hidden="true">
+              <div class="quiz-round-marker is-current" data-round-index="0">
+                <span class="quiz-round-dot">1</span>
+                <span class="quiz-round-copy">
+                  <span class="quiz-round-kicker">Round 1</span>
+                  <span class="quiz-round-title">Opening</span>
+                </span>
               </div>
-              <div class="line"></div>
-              <div class="step" data-target="#tab2">
-                <button type="button" class="step-trigger" role="tab" aria-controls="tab2" id="tab2-trigger">
-                  <span class="bs-stepper-circle">2</span>
-                  <span class="bs-stepper-label">
-                    <span class="step-kicker">Round 2</span>
-                    <span class="step-title">History</span>
-                  </span>
-                </button>
+              <div class="quiz-round-marker" data-round-index="1">
+                <span class="quiz-round-dot">2</span>
+                <span class="quiz-round-copy">
+                  <span class="quiz-round-kicker">Round 2</span>
+                  <span class="quiz-round-title">Backstory</span>
+                </span>
               </div>
-              <div class="line"></div>
-              <div class="step" data-target="#tab3">
-                <button type="button" class="step-trigger" role="tab" aria-controls="tab3" id="tab3-trigger">
-                  <span class="bs-stepper-circle">3</span>
-                  <span class="bs-stepper-label">
-                    <span class="step-kicker">Round 3</span>
-                    <span class="step-title">Lifestyle</span>
-                  </span>
-                </button>
+              <div class="quiz-round-marker" data-round-index="2">
+                <span class="quiz-round-dot">3</span>
+                <span class="quiz-round-copy">
+                  <span class="quiz-round-kicker">Round 3</span>
+                  <span class="quiz-round-title">Lifestyle</span>
+                </span>
               </div>
-              <div class="line"></div>
-              <div class="step" data-target="#tab4">
-                <button type="button" class="step-trigger" role="tab" aria-controls="tab4" id="tab4-trigger">
-                  <span class="bs-stepper-circle">4</span>
-                  <span class="bs-stepper-label">
-                    <span class="step-kicker">Round 4</span>
-                    <span class="step-title">Spotlight</span>
-                  </span>
-                </button>
+              <div class="quiz-round-marker" data-round-index="3">
+                <span class="quiz-round-dot">4</span>
+                <span class="quiz-round-copy">
+                  <span class="quiz-round-kicker">Round 4</span>
+                  <span class="quiz-round-title">Spotlight</span>
+                </span>
               </div>
-              <div class="line"></div>
-              <div class="step" data-target="#tab5">
-                <button type="button" class="step-trigger" role="tab" aria-controls="tab5" id="tab5-trigger">
-                  <span class="bs-stepper-circle">5</span>
-                  <span class="bs-stepper-label">
-                    <span class="step-kicker">Round 5</span>
-                    <span class="step-title">Future</span>
-                  </span>
-                </button>
+              <div class="quiz-round-marker" data-round-index="4">
+                <span class="quiz-round-dot">5</span>
+                <span class="quiz-round-copy">
+                  <span class="quiz-round-kicker">Round 5</span>
+                  <span class="quiz-round-title">Future</span>
+                </span>
               </div>
-              <div class="line"></div>
-              <div class="step" data-target="#tab6">
-                <button type="button" class="step-trigger" role="tab" aria-controls="tab6" id="tab6-trigger">
-                  <span class="bs-stepper-circle">6</span>
-                  <span class="bs-stepper-label">
-                    <span class="step-kicker">Final</span>
-                    <span class="step-title">Reveal</span>
-                  </span>
-                </button>
+              <div class="quiz-round-marker" data-round-index="5">
+                <span class="quiz-round-dot">6</span>
+                <span class="quiz-round-copy">
+                  <span class="quiz-round-kicker">Final</span>
+                  <span class="quiz-round-title">Reveal</span>
+                </span>
               </div>
             </div>
 
             <div id="bar" class="progress mb-4" aria-label="Questionnaire progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100" aria-valuetext="17% complete" style="width: 17%;">17%</div>
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-valuetext="0% complete" style="width: 0%;">0%</div>
             </div>
 
             <div class="bs-stepper-content px-0">
@@ -415,7 +398,7 @@
 
               <div class="content finish-panel" id="tab6" role="tabpanel" aria-labelledby="tab6-trigger">
                 <div class="result-board">
-                  <p class="finish-kicker">All rounds complete. Lock in the reveal when you are ready.</p>
+                  <p class="finish-kicker">All 16 answers are locked in. Step into the reveal when you are ready.</p>
 
                   <button type="button" id="resultCalc" class="btn btn-success btn-lg mb-3" onclick="calculateResults()">Reveal Final Quote</button>
 
@@ -464,9 +447,12 @@
               </div>
             </div>
 
-            <div class="wizard-actions d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center mt-4">
-              <button type="button" id="wizardPrevious" class="btn btn-outline-secondary mb-2 mb-sm-0">Previous</button>
-              <button type="button" id="wizardNext" class="btn btn-primary">Next</button>
+            <div class="wizard-actions quiz-actions d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center mt-4">
+              <p class="quiz-nav-note mb-3 mb-sm-0" id="quizNavNote">Choose an answer to lock it in and move to the next question.</p>
+              <div class="quiz-nav-buttons d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center">
+                <button type="button" id="wizardPrevious" class="btn btn-outline-secondary mb-2 mb-sm-0">Previous Question</button>
+                <button type="button" id="wizardNext" class="btn btn-primary">Continue</button>
+              </div>
             </div>
           </div>
 
@@ -481,7 +467,6 @@
 
     <script src="vendor/jquery/jquery-3.5.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/bs-stepper/js/bs-stepper.min.js"></script>
     <script src="messages.js"></script>
     <script src="calculations.js"></script>
     <script>
@@ -493,30 +478,29 @@
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         var SELECTORS = {
-          step: '.bs-stepper-header .step',
-          stepTrigger: '.step-trigger',
           panel: '.bs-stepper-content > .content',
           panelContainer: '.bs-stepper-content',
           progressBar: '.progress-bar',
-          validationAlert: '.validation-alert',
+          questionRow: '.question-row',
+          optionGroup: '.option-group[id]',
           activeChoiceInput: 'label.active input',
           radioInput: 'input[type="radio"]'
         };
-        var AUTO_ADVANCE_DELAY_MS = 320;
-        var NAVIGATION_LOCK_MS = 150;
+        var AUTO_ADVANCE_DELAY_MS = 380;
+        var NAVIGATION_LOCK_MS = 60;
         var stepperEl = document.getElementById('rootwizard');
-        var previousButton = document.getElementById('wizardPrevious');
-        var nextButton = document.getElementById('wizardNext');
         var progressBar = stepperEl.querySelector(SELECTORS.progressBar);
         var panelContainer = stepperEl.querySelector(SELECTORS.panelContainer);
-        var stepElements = Array.prototype.slice.call(stepperEl.querySelectorAll(SELECTORS.step));
-        var stepPanels = Array.prototype.slice.call(stepperEl.querySelectorAll(SELECTORS.panel));
-        var stepTriggers = stepElements.map(function (stepEl) {
-          return stepEl.querySelector(SELECTORS.stepTrigger);
-        });
-        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var messageInfoDialog = document.getElementById('messageInfoDialog');
+        var allPanels = Array.prototype.slice.call(stepperEl.querySelectorAll(SELECTORS.panel));
         var finishPanel = document.getElementById('tab6');
+        var questionPanels = allPanels.filter(function (panel) {
+          return panel !== finishPanel;
+        });
+        var previousButton = document.getElementById('wizardPrevious');
+        var nextButton = document.getElementById('wizardNext');
+        var navNoteEl = document.getElementById('quizNavNote');
+        var roundMarkers = Array.prototype.slice.call(stepperEl.querySelectorAll('.quiz-round-marker'));
+        var messageInfoDialog = document.getElementById('messageInfoDialog');
         var resultButton = document.getElementById('resultCalc');
         var resultStageEl = finishPanel ? finishPanel.querySelector('.result-stage') : null;
         var feedbackCommentShell = document.getElementById('feedbackCommentShell');
@@ -525,101 +509,63 @@
         var cusdisThreadEl = document.getElementById('cusdis_thread');
         var cusdisPlaceholderEl = document.getElementById('cusdisPlaceholder');
         var pointsEl = document.getElementById('points');
+        var scoreSummaryEl = document.getElementById('scoreSummary');
         var quoteEl = document.getElementById('qoute');
         var cowImagesEl = document.getElementById('cowImages');
         var showBannerEl = stepperEl.querySelector('.show-banner');
         var stageEyebrowEl = document.getElementById('stageEyebrow');
         var stageTitleEl = document.getElementById('stageTitle');
         var stageDescriptionEl = document.getElementById('stageDescription');
+        var questionStatusEl = document.getElementById('questionStatus');
         var stagePercentEl = document.getElementById('stagePercent');
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var cusdisConfig = {
           host: (window.LOBOLA_CONFIG && window.LOBOLA_CONFIG.cusdisHost) || 'https://cusdis.com',
           appId: window.LOBOLA_CONFIG && window.LOBOLA_CONFIG.cusdisAppId ? String(window.LOBOLA_CONFIG.cusdisAppId).trim() : ''
         };
-        var totalSteps = stepElements.length;
-        var currentStepIndex = 0;
+        var questionEntries = [];
+        var totalQuestions = 0;
+        var currentQuestionIndex = 0;
+        var currentMode = 'question';
         var navigationBusy = false;
         var navigationLockTimer = null;
         var autoAdvanceTimer = null;
-        var autoAdvanceStepNumber = null;
+        var autoAdvanceQuestionIndex = null;
         var selectedFeedbackVote = '';
         var cusdisRequested = false;
         var cusdisReady = false;
         var STAGE_META = [
           {
-            eyebrow: 'Round 1 of 6',
+            eyebrow: 'Round 1 of 5',
             title: 'Opening Round',
-            description: 'Start strong, lock in every answer, and keep the momentum going.'
+            description: 'Start strong. One answer at a time and the board opens up.'
           },
           {
-            eyebrow: 'Round 2 of 6',
+            eyebrow: 'Round 2 of 5',
             title: 'Backstory Round',
-            description: 'Past choices, current hustle, and the score starts getting real.'
+            description: 'Past choices and present hustle shape the score one lock-in at a time.'
           },
           {
-            eyebrow: 'Round 3 of 6',
+            eyebrow: 'Round 3 of 5',
             title: 'Lifestyle Round',
-            description: 'Assets, home comfort, and everyday flex points go under the lights.'
+            description: 'Assets, comfort, and daily flex points step into the spotlight now.'
           },
           {
-            eyebrow: 'Round 4 of 6',
+            eyebrow: 'Round 4 of 5',
             title: 'Spotlight Round',
-            description: 'This round turns the heat up on reputation, skills, and social glow.'
+            description: 'Reputation, skills, and social energy all go under the lights here.'
           },
           {
-            eyebrow: 'Round 5 of 6',
+            eyebrow: 'Round 5 of 5',
             title: 'Future Round',
-            description: 'Final decisions before the reveal. Lock everything in with confidence.'
+            description: 'Final choices before the reveal. Lock them in with confidence.'
           },
           {
-            eyebrow: 'Final answer',
+            eyebrow: 'Final reveal',
             title: 'Reveal Round',
-            description: 'You made it through every stage. Cue the scorecard and the final quote.'
+            description: 'Every answer is locked in. Cue the scorecard and final quote.'
           }
         ];
-
-        var validationRules = {
-          1: [
-            { group: '#eduGroup', message: 'Please select your highest level of education.' },
-            { group: '#virGroup', message: 'Please select if you are a virgin or not.' },
-            { group: '#kidGroup', message: 'Please select the number of children you currently have.' }
-          ],
-          2: [
-            { group: '#boyGroup', message: 'Please select the number of boyfriends you had in the past.' },
-            { group: '#marriageGroup', message: 'Please select if you have been married before.' },
-            { group: '#employmentGroup', message: 'Please select your current employment status.' }
-          ],
-          3: [
-            { group: '#carGroup', message: 'Please select if you own a car.' },
-            { group: '#houseGroup', message: 'Please select if you own a house.' },
-            { group: '#cookGroup', message: 'Please select your cooking skill level.' }
-          ],
-          4: [
-            { group: '#bedroomGroup', message: 'Please select your bedroom skill level.' },
-            { group: '#socialGroup', message: 'Please select if you are a socialite or not.' },
-            { group: '#royalGroup', message: 'Please select if you are from a royal family.' }
-          ],
-          5: [
-            { group: '#housewiveGroup', message: 'Please select if you intend to be a housewife.' },
-            { group: '#incomeGroup', message: 'Please select your income level.' },
-            { group: '#hairGroup', message: 'Please select your hair allowance.' },
-            { group: '#drinkGroup', message: 'Please select your drinking status.' }
-          ]
-        };
-
-        function getCurrentStepIndex() {
-          for (var i = 0; i < stepElements.length; i++) {
-            if (stepElements[i].classList.contains('active')) {
-              return i;
-            }
-          }
-
-          return 0;
-        }
-
-        function getProgressPercent(stepIndex) {
-          return Math.round(((stepIndex + 1) / totalSteps) * 100);
-        }
 
         function replayAnimation(element, className) {
           if (!element || prefersReducedMotion) {
@@ -631,125 +577,25 @@
           element.classList.add(className);
         }
 
-        function getAlert(stepNumber) {
-          var panel = stepPanels[stepNumber - 1];
-
-          return panel ? panel.querySelector(SELECTORS.validationAlert) : null;
-        }
-
-        function setValidationAlert(stepNumber, message) {
-          var alertEl = getAlert(stepNumber);
-
-          if (!alertEl) {
-            return;
-          }
-
-          if (message) {
-            alertEl.innerHTML = message;
-            alertEl.hidden = false;
-            replayAnimation(alertEl, 'attention-pop');
-            return;
-          }
-
-          alertEl.innerHTML = '';
-          alertEl.hidden = true;
-        }
-
         function getSelectedGroupInput(groupSelector) {
-          return document.querySelector(groupSelector + ' ' + SELECTORS.activeChoiceInput);
+          return groupSelector ? document.querySelector(groupSelector + ' ' + SELECTORS.activeChoiceInput) : null;
         }
 
-        function getRequiredGroups(stepNumber) {
-          var panel = stepPanels[stepNumber - 1];
-
-          if (!panel) {
-            return [];
-          }
-
-          return Array.prototype.slice.call(panel.querySelectorAll('.option-group[id]')).map(function (groupEl) {
-            return '#' + groupEl.id;
-          });
+        function countAnsweredQuestions() {
+          return questionEntries.reduce(function (count, entry) {
+            return count + (getSelectedGroupInput(entry.groupSelector) ? 1 : 0);
+          }, 0);
         }
 
-        function isGroupAnswered(groupSelector) {
-          return !!getSelectedGroupInput(groupSelector);
+        function getProgressPercent() {
+          return Math.round((countAnsweredQuestions() / totalQuestions) * 100);
         }
 
-        function isStepComplete(stepNumber) {
-          var requiredGroups = getRequiredGroups(stepNumber);
-
-          if (!requiredGroups.length) {
-            return false;
-          }
-
-          return requiredGroups.every(isGroupAnswered);
-        }
-
-        function buildMissingMessage(stepNumber, groupSelector) {
-          var rules = validationRules[stepNumber] || [];
-          var matchingRule = rules.find(function (rule) {
-            return rule.group === groupSelector;
-          });
-          var groupEl;
-          var questionLabel;
-
-          if (matchingRule) {
-            return matchingRule.message;
-          }
-
-          groupEl = document.querySelector(groupSelector);
-          questionLabel = groupEl ? groupEl.closest('.question-row').querySelector('.question-label') : null;
-
-          return questionLabel ? 'Please answer: ' + questionLabel.textContent.trim() : 'Please complete this step.';
-        }
-
-        function getFirstMissingRule(stepNumber) {
-          var requiredGroups = getRequiredGroups(stepNumber);
-          var groupSelector;
-          var i;
-
-          for (i = 0; i < requiredGroups.length; i++) {
-            groupSelector = requiredGroups[i];
-
-            if (!isGroupAnswered(groupSelector)) {
-              return {
-                group: groupSelector,
-                message: buildMissingMessage(stepNumber, groupSelector)
-              };
-            }
-          }
-
-          return null;
-        }
-
-        function validateStep(stepNumber) {
-          var missingRule = getFirstMissingRule(stepNumber);
-
-          if (missingRule) {
-            setValidationAlert(stepNumber, missingRule.message);
-            return false;
-          }
-
-          setValidationAlert(stepNumber, '');
-          return true;
-        }
-
-        function refreshValidationAlert(stepNumber) {
-          var alertEl = getAlert(stepNumber);
-          var missingRule;
-
-          if (!alertEl || alertEl.hidden) {
-            return;
-          }
-
-          missingRule = getFirstMissingRule(stepNumber);
-
-          if (missingRule) {
-            setValidationAlert(stepNumber, missingRule.message);
-            return;
-          }
-
-          setValidationAlert(stepNumber, '');
+        function syncProgress(percent) {
+          progressBar.style.width = percent + '%';
+          progressBar.setAttribute('aria-valuenow', String(percent));
+          progressBar.setAttribute('aria-valuetext', percent + '% complete');
+          progressBar.textContent = percent + '%';
         }
 
         function clearAutoAdvance() {
@@ -758,44 +604,76 @@
             autoAdvanceTimer = null;
           }
 
-          autoAdvanceStepNumber = null;
+          autoAdvanceQuestionIndex = null;
           stepperEl.classList.remove('is-auto-advancing');
-          stepperEl.removeAttribute('data-auto-advance-step');
+          stepperEl.removeAttribute('data-auto-advance-question');
         }
 
-        function scheduleAutoAdvance(stepNumber) {
-          clearAutoAdvance();
+        function beginNavigationLock() {
+          navigationBusy = true;
+          syncNavigation();
 
-          if (stepNumber >= totalSteps || currentStepIndex !== stepNumber - 1 || navigationBusy || !isStepComplete(stepNumber)) {
+          if (navigationLockTimer) {
+            window.clearTimeout(navigationLockTimer);
+          }
+
+          navigationLockTimer = window.setTimeout(function () {
+            releaseNavigationLock();
+          }, NAVIGATION_LOCK_MS);
+        }
+
+        function releaseNavigationLock() {
+          navigationBusy = false;
+
+          if (navigationLockTimer) {
+            window.clearTimeout(navigationLockTimer);
+            navigationLockTimer = null;
+          }
+
+          syncNavigation();
+        }
+
+        function syncRoundMarkers(activeStageIndex) {
+          roundMarkers.forEach(function (marker, index) {
+            marker.classList.toggle('is-complete', index < activeStageIndex);
+            marker.classList.toggle('is-current', index === activeStageIndex);
+            marker.classList.toggle('is-upcoming', index > activeStageIndex);
+          });
+        }
+
+        function syncNavigation() {
+          var isFirstQuestion = currentMode === 'question' && currentQuestionIndex === 0;
+          var currentEntry = currentMode === 'question' ? questionEntries[currentQuestionIndex] : null;
+          var hasAnsweredCurrentQuestion = currentEntry ? !!getSelectedGroupInput(currentEntry.groupSelector) : false;
+
+          if (!previousButton) {
             return;
           }
 
-          autoAdvanceStepNumber = stepNumber;
-          stepperEl.classList.add('is-auto-advancing');
-          stepperEl.setAttribute('data-auto-advance-step', String(stepNumber));
-          autoAdvanceTimer = window.setTimeout(function () {
-            if (navigationBusy || autoAdvanceStepNumber !== stepNumber || currentStepIndex !== stepNumber - 1 || !isStepComplete(stepNumber)) {
-              clearAutoAdvance();
-              return;
-            }
+          previousButton.hidden = isFirstQuestion && currentMode === 'question';
+          previousButton.disabled = navigationBusy || isFirstQuestion;
+          previousButton.setAttribute('aria-disabled', String(previousButton.disabled));
+          previousButton.textContent = currentMode === 'result' ? 'Review Last Question' : 'Previous Question';
 
-            clearAutoAdvance();
-            requestStepChange('next');
-          }, AUTO_ADVANCE_DELAY_MS);
+          if (nextButton) {
+            nextButton.hidden = currentMode !== 'question' || !hasAnsweredCurrentQuestion;
+            nextButton.disabled = navigationBusy || currentMode !== 'question' || !hasAnsweredCurrentQuestion;
+            nextButton.setAttribute('aria-disabled', String(nextButton.disabled));
+            nextButton.textContent = currentQuestionIndex === totalQuestions - 1 ? 'See Reveal' : 'Continue';
+          }
+
+          if (navNoteEl) {
+            navNoteEl.textContent = currentMode === 'result'
+              ? 'Every answer is locked in. Reveal the quote or go back to adjust the last question.'
+              : (hasAnsweredCurrentQuestion
+                ? 'This answer is already locked in. Change it or continue to the next question.'
+                : 'Choose one answer to lock it in and move to the next question.');
+          }
         }
 
-        function syncProgress(stepIndex) {
-          var percent = getProgressPercent(stepIndex);
-
-          progressBar.style.width = percent + '%';
-          progressBar.setAttribute('aria-valuenow', String(percent));
-          progressBar.setAttribute('aria-valuetext', percent + '% complete');
-          progressBar.textContent = percent + '%';
-        }
-
-        function syncStageBanner(stepIndex) {
-          var meta = STAGE_META[stepIndex] || STAGE_META[0];
-          var percent = getProgressPercent(stepIndex);
+        function syncQuestionBanner(entry) {
+          var meta = STAGE_META[entry.panelIndex];
+          var percent = getProgressPercent();
 
           if (stageEyebrowEl) {
             stageEyebrowEl.textContent = meta.eyebrow;
@@ -809,43 +687,45 @@
             stageDescriptionEl.textContent = meta.description;
           }
 
+          if (questionStatusEl) {
+            questionStatusEl.textContent = 'Question ' + (currentQuestionIndex + 1) + ' of ' + totalQuestions +
+              ' \u00b7 ' + entry.positionInRound + ' of ' + entry.totalInRound + ' in this round';
+          }
+
           if (stagePercentEl) {
             stagePercentEl.textContent = percent + '%';
           }
 
+          syncRoundMarkers(entry.panelIndex);
+          syncProgress(percent);
           replayAnimation(showBannerEl, 'status-bump');
         }
 
-        function syncStepAccessibility(stepIndex) {
-          stepTriggers.forEach(function (trigger, index) {
-            if (!trigger) {
-              return;
-            }
+        function syncResultBanner() {
+          var meta = STAGE_META[STAGE_META.length - 1];
+          if (stageEyebrowEl) {
+            stageEyebrowEl.textContent = meta.eyebrow;
+          }
 
-            stepElements[index].classList.toggle('is-complete', index < stepIndex);
-            stepElements[index].classList.toggle('is-current', index === stepIndex);
-            stepElements[index].classList.toggle('is-upcoming', index > stepIndex);
-            trigger.setAttribute('aria-label', STAGE_META[index].eyebrow + ': ' + STAGE_META[index].title);
+          if (stageTitleEl) {
+            stageTitleEl.textContent = meta.title;
+          }
 
-            if (index === stepIndex) {
-              trigger.setAttribute('aria-current', 'step');
-              return;
-            }
+          if (stageDescriptionEl) {
+            stageDescriptionEl.textContent = meta.description;
+          }
 
-            trigger.removeAttribute('aria-current');
-          });
-        }
+          if (questionStatusEl) {
+            questionStatusEl.textContent = 'All ' + totalQuestions + ' questions answered';
+          }
 
-        function syncNavigation(stepIndex) {
-          var isFirstStep = stepIndex === 0;
-          var isLastStep = stepIndex === totalSteps - 1;
+          if (stagePercentEl) {
+            stagePercentEl.textContent = '100%';
+          }
 
-          previousButton.disabled = navigationBusy || isFirstStep;
-          previousButton.setAttribute('aria-disabled', String(previousButton.disabled));
-          previousButton.classList.toggle('invisible', isFirstStep);
-          nextButton.disabled = navigationBusy || isLastStep;
-          nextButton.hidden = isLastStep;
-          nextButton.setAttribute('aria-disabled', String(nextButton.disabled));
+          syncRoundMarkers(STAGE_META.length - 1);
+          syncProgress(100);
+          replayAnimation(showBannerEl, 'status-bump');
         }
 
         function decorateCowImages() {
@@ -864,6 +744,7 @@
           }
 
           finishPanel.classList.remove('finish-revealed', 'result-spotlight');
+          finishPanel.removeAttribute('data-feedback-selection');
 
           if (resultButton) {
             resultButton.classList.remove('reveal-armed');
@@ -894,102 +775,183 @@
           replayAnimation(finishPanel, 'result-pop');
         }
 
-        function syncUi(stepIndex) {
-          currentStepIndex = stepIndex;
-          stepperEl.setAttribute('data-current-step', String(stepIndex + 1));
-          syncProgress(stepIndex);
-          syncStageBanner(stepIndex);
-          syncStepAccessibility(stepIndex);
-          syncNavigation(stepIndex);
-          replayAnimation(stepPanels[stepIndex], 'panel-enter');
-        }
-
-        function releaseNavigationLock() {
-          navigationBusy = false;
-
-          if (navigationLockTimer) {
-            window.clearTimeout(navigationLockTimer);
-            navigationLockTimer = null;
+        function clearCalculatedResult() {
+          if (pointsEl) {
+            pointsEl.textContent = '';
           }
 
-          syncNavigation(currentStepIndex);
+          if (scoreSummaryEl) {
+            scoreSummaryEl.textContent = '';
+          }
+
+          if (quoteEl) {
+            quoteEl.textContent = '';
+          }
+
+          if (cowImagesEl) {
+            cowImagesEl.innerHTML = '';
+            cowImagesEl.removeAttribute('role');
+            cowImagesEl.removeAttribute('aria-label');
+          }
+
+          resetFeedbackState();
+          resetResultRevealState();
         }
 
-        function requestStepChange(direction) {
-          clearAutoAdvance();
+        function showQuestion(index) {
+          var entry = questionEntries[index];
 
+          if (!entry) {
+            return;
+          }
+
+          currentMode = 'question';
+          currentQuestionIndex = index;
+          stepperEl.setAttribute('data-current-question', String(index + 1));
+          stepperEl.setAttribute('data-current-round', String(entry.panelIndex + 1));
+
+          questionPanels.forEach(function (panel) {
+            var isCurrentPanel = panel === entry.panel;
+
+            panel.hidden = !isCurrentPanel;
+            panel.classList.toggle('quiz-panel-active', isCurrentPanel);
+          });
+
+          questionEntries.forEach(function (item, itemIndex) {
+            var isCurrentQuestion = itemIndex === index;
+
+            item.row.hidden = !isCurrentQuestion;
+            item.row.classList.toggle('is-active', isCurrentQuestion);
+            item.row.classList.toggle('is-question-complete', !!getSelectedGroupInput(item.groupSelector));
+          });
+
+          if (finishPanel) {
+            finishPanel.hidden = true;
+          }
+
+          syncQuestionBanner(entry);
+          syncNavigation();
+          replayAnimation(entry.panel, 'panel-enter');
+        }
+
+        function showResultScreen() {
+          currentMode = 'result';
+          currentQuestionIndex = totalQuestions;
+          stepperEl.setAttribute('data-current-question', 'result');
+          stepperEl.setAttribute('data-current-round', String(STAGE_META.length));
+
+          questionPanels.forEach(function (panel) {
+            panel.hidden = true;
+            panel.classList.remove('quiz-panel-active');
+          });
+
+          questionEntries.forEach(function (entry) {
+            entry.row.hidden = true;
+            entry.row.classList.remove('is-active');
+          });
+
+          if (finishPanel) {
+            finishPanel.hidden = false;
+          }
+
+          syncResultBanner();
+          syncNavigation();
+          replayAnimation(finishPanel, 'panel-enter');
+        }
+
+        function moveToNextQuestion() {
+          if (currentMode !== 'question' || navigationBusy) {
+            return;
+          }
+
+          beginNavigationLock();
+
+          if (currentQuestionIndex >= totalQuestions - 1) {
+            showResultScreen();
+            return;
+          }
+
+          showQuestion(currentQuestionIndex + 1);
+        }
+
+        function moveToPreviousQuestion() {
           if (navigationBusy) {
             return;
           }
 
-          if ((direction === 'previous' && currentStepIndex === 0) ||
-              (direction === 'next' && currentStepIndex === totalSteps - 1)) {
+          clearAutoAdvance();
+
+          if (currentMode === 'result') {
+            beginNavigationLock();
+            showQuestion(totalQuestions - 1);
             return;
           }
 
-          navigationBusy = true;
-          syncNavigation(currentStepIndex);
-          navigationLockTimer = window.setTimeout(function () {
-            releaseNavigationLock();
-          }, NAVIGATION_LOCK_MS);
-          stepper[direction]();
+          if (currentQuestionIndex === 0) {
+            return;
+          }
+
+          beginNavigationLock();
+          showQuestion(currentQuestionIndex - 1);
         }
 
-        var stepper = new Stepper(stepperEl, {
-          linear: true,
-          animation: false
-        });
+        function scheduleAutoAdvance() {
+          clearAutoAdvance();
 
-        stepperEl.addEventListener('show.bs-stepper', function (event) {
-          if (event.detail.to > event.detail.from && !validateStep(event.detail.from + 1)) {
-            event.preventDefault();
-            releaseNavigationLock();
+          if (currentMode !== 'question' || navigationBusy) {
+            return;
           }
-        });
 
-        stepperEl.addEventListener('shown.bs-stepper', function (event) {
-          releaseNavigationLock();
-          syncUi(event.detail.indexStep);
-        });
+          autoAdvanceQuestionIndex = currentQuestionIndex;
+          stepperEl.classList.add('is-auto-advancing');
+          stepperEl.setAttribute('data-auto-advance-question', String(autoAdvanceQuestionIndex + 1));
+          autoAdvanceTimer = window.setTimeout(function () {
+            var entry = questionEntries[autoAdvanceQuestionIndex];
+
+            if (!entry || navigationBusy || currentMode !== 'question' || autoAdvanceQuestionIndex !== currentQuestionIndex || !getSelectedGroupInput(entry.groupSelector)) {
+              clearAutoAdvance();
+              return;
+            }
+
+            clearAutoAdvance();
+            moveToNextQuestion();
+          }, AUTO_ADVANCE_DELAY_MS);
+        }
 
         panelContainer.addEventListener('change', function (event) {
-          var panel;
-          var stepNumber;
+          var entry;
 
           if (!event.target || !event.target.matches(SELECTORS.radioInput)) {
             return;
           }
 
-          panel = event.target.closest('.content');
+          clearCalculatedResult();
+          entry = questionEntries[currentQuestionIndex];
 
-          if (!panel) {
+          if (currentMode !== 'question' || !entry) {
             return;
           }
 
-          stepNumber = stepPanels.indexOf(panel) + 1;
+          window.setTimeout(function () {
+            var activeLabel = entry.groupSelector ? document.querySelector(entry.groupSelector + ' label.active') : null;
 
-          if (stepNumber > 0) {
-            replayAnimation(event.target.closest('label.btn'), 'choice-lock');
-            refreshValidationAlert(stepNumber);
-
-            if (stepNumber < totalSteps && stepNumber === currentStepIndex + 1) {
-              if (isStepComplete(stepNumber)) {
-                scheduleAutoAdvance(stepNumber);
-                return;
-              }
-
-              clearAutoAdvance();
+            if (!entry.row.hidden && getSelectedGroupInput(entry.groupSelector)) {
+              replayAnimation(activeLabel, 'choice-lock');
+              syncQuestionBanner(entry);
+              scheduleAutoAdvance();
             }
-          }
+          }, 0);
         });
 
         previousButton.addEventListener('click', function () {
-          requestStepChange('previous');
+          moveToPreviousQuestion();
         });
 
-        nextButton.addEventListener('click', function () {
-          requestStepChange('next');
-        });
+        if (nextButton) {
+          nextButton.addEventListener('click', function () {
+            moveToNextQuestion();
+          });
+        }
 
         function updateFeedbackSelection(vote) {
           selectedFeedbackVote = vote;
@@ -1014,6 +976,38 @@
             feedbackCommentHelp.textContent = vote === 'yes'
               ? 'Keep it under 500 characters. Tell us what felt right.'
               : 'Keep it under 500 characters. Tell us what felt off.';
+          }
+        }
+
+        function resetFeedbackState() {
+          selectedFeedbackVote = '';
+
+          feedbackButtons.forEach(function (button) {
+            button.classList.remove('is-selected');
+            button.setAttribute('aria-pressed', 'false');
+          });
+
+          if (finishPanel) {
+            finishPanel.classList.remove('feedback-engaged');
+            finishPanel.removeAttribute('data-feedback-selection');
+          }
+
+          if (feedbackCommentShell) {
+            feedbackCommentShell.hidden = true;
+          }
+
+          if (feedbackCommentHelp) {
+            feedbackCommentHelp.textContent = 'Keep it under 500 characters.';
+          }
+
+          if (cusdisPlaceholderEl) {
+            cusdisPlaceholderEl.textContent = 'Choose 👍 Yes or 👎 No to open the optional comment box.';
+            cusdisPlaceholderEl.hidden = false;
+            cusdisPlaceholderEl.setAttribute('data-tone', 'default');
+          }
+
+          if (cusdisThreadEl) {
+            cusdisThreadEl.hidden = true;
           }
         }
 
@@ -1065,6 +1059,7 @@
           cusdisThreadEl.dataset.theme = 'dark';
 
           if (cusdisReady && window.CUSDIS && window.CUSDIS.renderTo) {
+            markCusdisReady();
             return;
           }
 
@@ -1128,9 +1123,57 @@
           revealResultState();
         });
 
-        syncUi(getCurrentStepIndex());
+        questionPanels.forEach(function (panel, panelIndex) {
+          Array.prototype.slice.call(panel.querySelectorAll(SELECTORS.questionRow)).forEach(function (row, rowIndex, rows) {
+            var groupEl = row.querySelector(SELECTORS.optionGroup);
+            var labelEl = row.querySelector('.question-label');
+            var questionNumber = questionEntries.length + 1;
+
+            row.hidden = true;
+
+            if (labelEl) {
+              labelEl.setAttribute('data-question-number', String(questionNumber));
+            }
+
+            questionEntries.push({
+              panel: panel,
+              panelIndex: panelIndex,
+              row: row,
+              groupSelector: groupEl ? '#' + groupEl.id : '',
+              positionInRound: rowIndex + 1,
+              totalInRound: rows.length
+            });
+          });
+        });
+
+        totalQuestions = questionEntries.length;
+
+        function getInitialQuestionIndex() {
+          var index;
+
+          for (index = 0; index < questionEntries.length; index++) {
+            if (!getSelectedGroupInput(questionEntries[index].groupSelector)) {
+              return index;
+            }
+          }
+
+          return totalQuestions;
+        }
+
+        Array.prototype.slice.call(stepperEl.querySelectorAll('.validation-alert')).forEach(function (alertEl) {
+          alertEl.hidden = true;
+        });
+
+        if (finishPanel) {
+          finishPanel.hidden = true;
+        }
+
+        if (getInitialQuestionIndex() >= totalQuestions) {
+          showResultScreen();
+        } else {
+          showQuestion(getInitialQuestionIndex());
+        }
       });
     </script>
   </body>
 </html>
-
